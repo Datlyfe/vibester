@@ -4,8 +4,8 @@
   <div class="menu">
     <!-- Logo -->
     <div class="logo">
-      <img class="logo__img" src="@/assets/img/logo.png" alt="Logo">
-      <h1 class="logo__label">TuneIn</h1>
+      <!-- <img class="logo__img" src="@/assets/img/logo.png" alt="Logo"> -->
+      <h1 class="logo__label">Vibester</h1>
     </div>
     <!-- NAVIGATION -->
     <nav class="nav"> 
