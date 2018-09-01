@@ -5,16 +5,16 @@ Vibester is a simple and elegent music player powered by Electron and VueJs
 
 ### Installation
 
-`yarn install (or npm install)`
+`yarn (or npm install)`
 
 #### Dev
 
-`yarn serve:elecron`
+`yarn serve:electron`
 
 
 #### Build
 
-`yarn build:elecron`
+`yarn build:electron`
 
 
 If you wish you contribute to this project, this road map below that should give you a fair idea on what im planning to implement next:
