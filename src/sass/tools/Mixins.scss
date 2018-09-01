@@ -1,0 +1,50 @@
+$breakpoints: (
+  xs: 576px,
+  sm: 768px,
+  md: 992px,
+  lg: 1200px,
+  xl: 1580px,
+  xxl: 1750px,
+);
+
+@mixin respond-above($breakpoint) {
+
+  @if map-has-key($breakpoints, $breakpoint) {
+
+    $breakpoint-value: map-get($breakpoints, $breakpoint);
+
+    @media (min-width: $breakpoint-value) {
+      @content;
+    }
+
+  } @else {
+    @warn 'Invalid breakpoint: #{$breakpoint}.';
+  }
+}
+
+$easings:(
+default: cubic-bezier(.4, .25, .3, 1),
+in: cubic-bezier(.6, .1, .8, .7),
+out: cubic-bezier(.2, .3, .4, .9),
+in-out: cubic-bezier(.5, .15, .4, 1),
+bounce: cubic-bezier(.4, .25, .3, 1.4)
+);
+
+@function cb($fn: default) {
+@return map-get($easings, $fn);
+}
+
+@mixin imagePlaceholder() {
+	background-image: linear-gradient(
+		to bottom,
+		rgba(#162229, .75),
+		rgba(#064362, .75),
+		rgba(#6f868c, .75),
+		rgba(#2c2623, .75)
+	);
+}
+@mixin bgCover($_pos:center) {
+background-size: cover;
+background-repeat: no-repeat;
+background-position: $_pos;
+}

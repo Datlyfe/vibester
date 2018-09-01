@@ -1,0 +1,30 @@
+.placeholder {
+    transition: all .5s;
+    width: 100%;
+    margin-bottom: 1rem;
+    height: auto;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 3px solid #dfdfdf;
+    background-image: linear-gradient(
+		to bottom,
+		rgba(#162229, .75),
+		rgba(#DB1D40, .75),
+		rgba(#162229, .75),
+		rgba(#7E2236, .75)
+  );
+
+  .preloader{
+    display: none;
+  }
+  
+  .image{
+    backface-visibility: hidden;
+    animation-duration: .5s;
+    width: 100%;
+    padding-top: 100%;
+    object-fit: cover;
+    background-size: cover;
+    background-position: center;
+  }
+}

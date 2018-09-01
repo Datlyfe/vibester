@@ -1,0 +1,79 @@
+.search {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  .fa {
+    position: relative;
+    color: #ababad;
+    font-weight: 300;
+    padding: 0.5rem;
+    font-size: 1.6rem !important;
+    margin: 0 1rem;
+    cursor: pointer;
+    align-items: center;
+    display: flex;
+    transition: all 0.3s;
+    &:hover {
+      color: #fada49;
+    }
+  }
+  .fa-search {
+    cursor: unset;
+    border-left: 1px solid #ababad;
+    padding-left: 2rem;
+    margin: 0 2rem;
+    font-size: 1.6rem !important;
+    &:hover {
+      color: #ababad;
+    }
+  }
+  .search__input::placeholder {
+    color: #ababad;
+    font-size: 1.6rem;
+  }
+  &__input {
+    height: 100%;
+    background: transparent;
+    border: none;
+    color: #ababad;
+    font-size: 2rem;
+    position: relative;
+    top: 1px;
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+
+.res__header{
+  margin:5rem 0;
+  margin-bottom: 2rem;
+  &__label{
+    font-size:1.8rem;
+  }
+}
+
+.search__results{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  .res{
+    align-items: center;
+    margin: 1.5rem 1rem;
+    width: calc(100%/3 - 2rem);
+    display: flex;
+
+    &__info{
+      margin: 0 2rem;
+      font-size: 1.4rem;
+      .title{
+        display: block;
+      }
+      .artist{
+        color: silver;        
+      }
+    }
+  }
+}
