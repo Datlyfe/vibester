@@ -1,5 +1,9 @@
 <template>
 <div class="playlists">
+  <!-- MODAL -->
+  <modal :classes="['modal-body']" name="create-playlist">
+    <h1>Hello world</h1>
+  </modal>
   <!-- HEADER -->
   <Header title="Playlists">
     <template slot="actions">
@@ -46,10 +50,7 @@ export default Vue.extend({
       this.$router.push({name:'playlist',params:{id:p.name}})
     },
     handleNewPlaylist(){
-      this.mode=true;
-      setTimeout(()=>{
-        (this.$refs.input as HTMLInputElement).focus()
-      },1)
+     this.$modal.show('create-playlist')
     },
     addPlaylist() {
       this.playlists.push({ name: this.playlistName });
@@ -62,5 +63,11 @@ export default Vue.extend({
   }
 });
 </script>
+
+
+<style lang="scss" scoped>
+
+</style>
+
 
 

@@ -15,7 +15,7 @@ export default Vue.extend({});
 .main {
   position: relative;
   grid-row: 1/2;
-  grid-column: 2/3;
+  grid-column: 2/-1;
   background: #232323;
   overflow-y: scroll;
   overflow-x: hidden;

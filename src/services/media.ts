@@ -145,13 +145,17 @@ export const fetchCover = async (trackPath: string): Promise<string | null> => {
   return null;
 };
 
+export const upper = (string:string)=>{
+  return string.replace(/^\w/, s => s.toUpperCase());
+}
+
 export const parseMusicMetadata = (
   data: mm.IAudioMetadata,
   trackPath: string
 ): Partial<Song> => {
   const { common, format } = data;
   const metadata = {
-    title: common.title || path.parse(trackPath).base,
+    title: upper(common.title) || upper(path.parse(trackPath).base),
     album: common.album,
     artist: common.artist,
     duration: parseDuration(format.duration),
@@ -161,13 +165,13 @@ export const parseMusicMetadata = (
   return metadata;
 };
 
-export const simpleSort = (array: string[], sorting: "asc" | "desc") => {
+export const simpleSort = (array: Song[], sorting: "asc" | "desc") => {
   if (sorting === "asc") {
-    array.sort((a, b) => (a > b ? 1 : -1));
+    array.sort((a, b) => (a.title > b.title ? 1 : -1));
   } else if (sorting === "desc") {
-    array.sort((a, b) => (b > a ? -1 : 1));
+    array.sort((a, b) => (b.title > a.title ? -1 : 1));
   }
-  const result: string[] = [];
+  const result: Song[] = [];
   array.forEach(item => {
     if (!result.includes(item)) result.push(item);
   });

@@ -1,5 +1,5 @@
 <template>
-  <div ref="list" class="table animated fadeIn">
+  <div ref="list" class="table animated zoomIn">
     <div v-if="songs.length>0" class="row header">
       <div class="cell">Title</div>
       <div class="cell">Artist</div>
@@ -7,12 +7,16 @@
       <div class="cell">Duration</div>
     </div>
 
-    <div :class="{'selected':selected.includes(song.id)}" tabindex="-1" @contextmenu="showContextMenu" @mousedown="selectSong($event,song.id,index)"  @dblclick="cue(song)" v-for="(song,index) in songs" class="row" :key="song.id">
-      <div class="cell">{{song.title}}</div>
-      <div class="cell">{{song.artist}}</div>
-      <div class="cell">{{song.album}}</div>
-      <div class="cell">{{song.duration}}</div>
-    </div>
+    <virtual-list wclass="v-list" :size="35" :remain="16" :bench="0">
+      <div :class="{'selected':selected.includes(song.id)}" tabindex="-1" @contextmenu="showContextMenu" @mousedown="selectSong($event,song.id,index)"  @dblclick="cue(song)" v-for="(song,index) in songs" class="row" :key="song.id">
+        <div class="cell">{{song.title}}</div>
+        <div class="cell">{{song.artist}}</div>
+        <div class="cell">{{song.album}}</div>
+        <div class="cell">{{song.duration}}</div>
+      </div>
+    </virtual-list>
+
+    
 </div>
 </template>
 
@@ -23,18 +27,23 @@ import bus from "@/services/bus";
 import { Song } from "@/models/song";
 import electron from "electron";
 import { isCtrlKey } from "@/services/utils";
+import VirtualList from 'vue-virtual-scroll-list'
+
 const { shell, remote } = electron;
 const { Menu } = remote;
 export default Vue.extend({
+  props: ["songs"],
   data() {
     return {
       selected: []
     };
   },
-  props: ["songs"],
+  components:{
+    VirtualList
+  },
   methods: {
     cue(song: Song) {
-      bus.$emit("newCue", song, true);
+      this.$store.dispatch("PLAY_SONG", song);
     },
     selectSong(e, id, index) {
       if (
@@ -139,6 +148,9 @@ export default Vue.extend({
     isLeftClick: e => e.button === 0,
     isRightClick: e => e.button === 2
   },
+  mounted(){
+    document.getElementsByClassName('v-list')[0].parentElement.classList.add('vv-list')
+  },
   created() {
     document.addEventListener("mousedown", this.handleOutsideClick);
   },
@@ -152,18 +164,17 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .table {
   width: 100%;
-  display: table;
   margin: 2rem 0;
-  animation-duration: 0.4s;
+  animation-duration: 0.3s;
 }
 .row {
-  display: table-row;
+  display: flex;
   backface-visibility: hidden;
   width: 100%;
-  transition: all 0.2s !important;
+  // transition: all 0.2s !important;
 }
 .cell {
-  display: table-cell;
+  width: 25%;
   backface-visibility: hidden;
 }
 .row .cell {
@@ -173,7 +184,7 @@ export default Vue.extend({
   font-weight: 400 !important;
 }
 .row.header .cell {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   color: white;
   font-weight: 700;
 }
@@ -204,6 +215,16 @@ export default Vue.extend({
   font-size: 1.8rem;
   .fa {
     font-size: 1.8rem !important;
+  }
+}
+
+.vv-list{
+  &::-webkit-scrollbar {
+    width: 3px;
+    background-color: #303030;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #c9c9c9;
   }
 }
 </style>

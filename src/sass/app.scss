@@ -61,6 +61,12 @@ body {
   grid-template-columns: 250px minmax(1000px,auto) 250px;
   grid-template-rows: minmax(100%, 75vh);
 }
+
+.modal-body{
+  background: rgb(85, 0, 0);
+  color: white;
+  font-size: 1.6rem;
+}
 // COMPONENTS
 @import "./components/Loader";
 @import "./components/Placeholder";

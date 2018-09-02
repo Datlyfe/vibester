@@ -79,13 +79,13 @@ export default Vue.extend({
   flex-direction: column;
   align-items: center;
   margin: 1.5rem 1rem;
-  width: calc(100% / 5 - 2rem);
+  width: calc(100% / 6 - 2rem);
 
   @include respond-above(xl) {
-    width: calc(100% / 6 - 2rem);
+    width: calc(100% / 7 - 2rem);
   }
   @include respond-above(xxl) {
-    width: calc(100% / 7 - 2rem);
+    width: calc(100% / 8 - 2rem);
   }
 }
 

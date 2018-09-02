@@ -4,10 +4,10 @@
     <audio autoplay crossorigin="anonymous" style="display:none" ref="audio" :src="song.src"></audio>
     <!-- CONTROLS -->
     <div class="controls">
-      <i class="fa fa-backward"></i>
+      <i @click="prev" class="fa fa-backward"></i>
       <i @click="play" v-if="!playing" class="fa fa-play"></i>
       <i @click="pause" v-if="playing" class="fa fa-pause"></i>
-      <i class="fa fa-forward"></i>
+      <i @click="next" class="fa fa-forward"></i>
     </div>
     <!-- SONG COVER -->
     <div :style="coverStyle" class="cover"></div>
@@ -74,6 +74,14 @@ export default Vue.extend({
     },
     changeVolume(e: any) {
       this.audio.volume = parseInt(e.target.value) / 1000;
+    },
+    next() {
+      this.isLocal &&
+        this.$store.dispatch("PLAY_NEXT_SONG", { id: this.song.id });
+    },
+    prev() {
+      this.isLocal &&
+        this.$store.dispatch("PLAY_PREV_SONG", { id: this.song.id });
     }
   },
   mounted() {
@@ -94,6 +102,10 @@ export default Vue.extend({
       this.value = 0;
       this.currentTime = "0:00";
       this.playing = false;
+      // TODO Play next Song
+      if (this.isLocal) {
+        this.$store.dispatch("PLAY_NEXT_SONG", { id: this.song.id });
+      }
     };
   },
   beforeDestroy() {

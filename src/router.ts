@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Playlist from "@/components/Playlist.vue";
 
 const loadView = (view:string) => {
   return () => import(`@/views/${view}.vue`);
@@ -23,10 +22,7 @@ export default new Router({
     {
       path: "/playlists",
       name: "playlists",
-      component: loadView("Playlists"),
-      children:[
-        {path:':id',name:'playlist',component:Playlist,}
-      ]
+      component: loadView("Playlists")
     }
   ]
 });

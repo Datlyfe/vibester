@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <Menu/>
-    <Main ref="main"/>
-    <Cue v-if="showCue"/>
+    <Main/>
+    <!-- <Cue/> -->
     <Footer/>
   </div>
 </template>
@@ -14,26 +14,16 @@ import Menu from "@/components/Menu.vue";
 import Cue from "@/components/Cue.vue";
 import Footer from "@/components/Footer.vue";
 
-import bus from "@/services/bus";
-
 export default Vue.extend({
   name: "home",
-  data(){
-    return{
-      showCue:true
-    }
+  data() {
+    return {};
   },
   components: {
     Menu,
     Main,
     Cue,
     Footer
-  },
-  created(){
-    bus.$on('toggleCue',()=>{
-      this.showCue=!this.showCue;
-      (this.$refs.main.$el as HTMLElement).classList.toggle('expand');
-    })
   }
 });
 </script>

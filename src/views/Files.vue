@@ -30,7 +30,7 @@ import { ipcRenderer } from "electron";
 export default Vue.extend({
   data() {
     return {
-      search: ""
+      search: this.$store.state.songsFilter
     };
   },
   components: {
@@ -53,6 +53,9 @@ export default Vue.extend({
     setFolder() {
       ipcRenderer.send("setFolder");
     }
+  },
+  beforeDestroy(){
+    this.$store.commit('songsFilter',this.search);
   }
 });
 </script>

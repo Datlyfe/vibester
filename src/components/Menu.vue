@@ -4,7 +4,7 @@
   <div class="menu">
     <!-- Logo -->
     <div class="logo">
-      <!-- <img class="logo__img" src="@/assets/img/logo.png" alt="Logo"> -->
+      <img class="logo__img" src="@/assets/img/logo.png" alt="Logo">
       <h1 class="logo__label">Vibester</h1>
     </div>
     <!-- NAVIGATION -->
@@ -51,9 +51,9 @@ export default Vue.extend({});
   display: flex;
   align-items: center;
   &__label {
-    text-transform: uppercase;
+    text-transform: capitalize;
     font-weight: 700;
-    font-size: 2.5rem;
+    // font-size: 2.5rem;
     letter-spacing: 0.2rem;
     color: #f0e6e8;
     width: max-content;
