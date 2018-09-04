@@ -1,17 +1,16 @@
 import Vue from "vue";
-import App from "@/App.vue";
 import router from "./router";
 import store from "./store";
+import Home from "@/views/Home.vue";
 import Resource from "./plugins/resource";
-import * as resources from "./resources";
-import * as media from '@/services/media'
 import AsyncComputed from "vue-async-computed";
-import VModal from 'vue-js-modal'
 import { ipcRenderer } from "electron";
-import db from '@/db';
-import { Song } from '@/models/song';
+import db from "@/db";
+import { ISong } from "@/models/song";
+import { IPlaylist } from "@/models/playlist";
+import * as media from "@/services/media";
+import * as resources from "./resources";
 
-Vue.use(VModal)
 Vue.use(AsyncComputed);
 Vue.config.productionTip = false;
 Vue.use(Resource, {
@@ -25,9 +24,21 @@ new Vue({
   router,
   store,
   created() {
-    db.table('songs').toArray().then((songs:Song[])=>{
-      store.state.localSongs=media.simpleSort(songs,'asc');
-    })
+    // db.table('songs').clear();
+    // db.table('playlists').clear();
+
+    db.table("songs")
+      .toArray()
+      .then((songs: ISong[]) => {
+        store.state.localSongs = media.simpleSort(songs, "asc");
+      });
+
+    db.table("playlists")
+      .toArray()
+      .then((playlists: IPlaylist[]) => {
+        console.log(playlists);
+        store.state.playlists = playlists;
+      });
 
     ipcRenderer.on("setFolder", async (_, folder) => {
       if (store.state.folder == folder) {
@@ -35,8 +46,8 @@ new Vue({
       }
       store.state.folder = folder;
       localStorage.setItem("folder", folder);
-      store.dispatch('READ_MUSIC_FOLDER');
+      store.dispatch("READ_MUSIC_FOLDER");
     });
   },
-  render: h => h(App)
+  render: h => h(Home)
 }).$mount("#app");

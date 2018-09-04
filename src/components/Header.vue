@@ -1,8 +1,8 @@
 <template>
     <div class="header">
-      <h1 ref="title" class="header__label">{{title}}</h1>
+      <h1 class="header__label">{{title}}</h1>
+      <slot name="info"></slot>
       <slot name="search"></slot>
-      <span style="flex:1"></span>      
       <slot name="actions"></slot>
     </div>
 </template>
@@ -47,4 +47,3 @@ export default Vue.extend({
   }
 }
 </style>
-

@@ -3,7 +3,7 @@ import path from "path";
 import * as mm from "music-metadata";
 import * as util from "util";
 import * as fs from "fs";
-import { Song } from "@/models/song";
+import { ISong } from "@/models/song";
 
 export const stat = util.promisify(fs.stat);
 
@@ -65,7 +65,6 @@ export const parseBase64 = (format: string, data: string): string => {
   return `data:image/${format};base64,${data}`;
 };
 
-
 export const parseUri = (uri: string): string => {
   const root = process.platform === "win32" ? "" : path.parse(uri).root;
   const location = uri
@@ -75,8 +74,7 @@ export const parseUri = (uri: string): string => {
   return `file://${root}${location}`;
 };
 
-
-export const getDefaultMetadata = (): Song => ({
+export const getDefaultMetadata = (): ISong => ({
   album: "Unknown",
   artist: "Unknown artist",
   duration: null,
@@ -88,9 +86,9 @@ export const getDefaultMetadata = (): Song => ({
   year: null
 });
 
-export const getMetadata = async (trackPath: string): Promise<Song> => {
+export const getMetadata = async (trackPath: string): Promise<ISong> => {
   const defaultMetadata = getDefaultMetadata();
-  const basicMetadata: Song = {
+  const basicMetadata: ISong = {
     ...defaultMetadata,
     path: trackPath
   };
@@ -106,7 +104,7 @@ export const getMetadata = async (trackPath: string): Promise<Song> => {
 
     const parsedData = parseMusicMetadata(data, trackPath);
 
-    const metadata: Song = {
+    const metadata: ISong = {
       ...defaultMetadata,
       ...parsedData,
       path: trackPath
@@ -115,7 +113,7 @@ export const getMetadata = async (trackPath: string): Promise<Song> => {
     if (!metadata.duration) {
       try {
         let duration = await getAudioDuration(trackPath);
-        metadata.duration=parseDuration(duration);
+        metadata.duration = parseDuration(duration);
       } catch (err) {
         console.warn(
           `An error occured while getting ${trackPath} duration: ${err}`
@@ -145,14 +143,14 @@ export const fetchCover = async (trackPath: string): Promise<string | null> => {
   return null;
 };
 
-export const upper = (string:string)=>{
+export const upper = (string: string) => {
   return string.replace(/^\w/, s => s.toUpperCase());
-}
+};
 
 export const parseMusicMetadata = (
   data: mm.IAudioMetadata,
   trackPath: string
-): Partial<Song> => {
+): Partial<ISong> => {
   const { common, format } = data;
   const metadata = {
     title: upper(common.title) || upper(path.parse(trackPath).base),
@@ -165,13 +163,13 @@ export const parseMusicMetadata = (
   return metadata;
 };
 
-export const simpleSort = (array: Song[], sorting: "asc" | "desc") => {
+export const simpleSort = (array: ISong[], sorting: "asc" | "desc") => {
   if (sorting === "asc") {
     array.sort((a, b) => (a.title > b.title ? 1 : -1));
   } else if (sorting === "desc") {
     array.sort((a, b) => (b.title > a.title ? -1 : 1));
   }
-  const result: Song[] = [];
+  const result: ISong[] = [];
   array.forEach(item => {
     if (!result.includes(item)) result.push(item);
   });

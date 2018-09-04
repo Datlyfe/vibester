@@ -1,6 +1,7 @@
 .search {
   height: 100%;
   display: flex;
+  flex: 1;
   align-items: center;
   .fa {
     position: relative;
@@ -33,6 +34,7 @@
   }
   &__input {
     height: 100%;
+    width: 100%;
     background: transparent;
     border: none;
     color: #ababad;

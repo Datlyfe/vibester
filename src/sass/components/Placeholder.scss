@@ -1,4 +1,5 @@
 .placeholder {
+    position: relative;
     transition: all .5s;
     width: 100%;
     margin-bottom: 1rem;
@@ -17,10 +18,11 @@
   .preloader{
     display: none;
   }
+
   
   .image{
     backface-visibility: hidden;
-    animation-duration: .5s;
+    animation-duration:.8s;
     width: 100%;
     padding-top: 100%;
     object-fit: cover;
@@ -28,3 +30,9 @@
     background-position: center;
   }
 }
+
+.c{
+  width: 200px;
+  height: 200px;
+}
+

@@ -102,7 +102,6 @@ export default Vue.extend({
       this.value = 0;
       this.currentTime = "0:00";
       this.playing = false;
-      // TODO Play next Song
       if (this.isLocal) {
         this.$store.dispatch("PLAY_NEXT_SONG", { id: this.song.id });
       }
@@ -113,89 +112,3 @@ export default Vue.extend({
   }
 });
 </script>
-
-
-<style lang="scss" scoped>
-.player {
-  margin-left: 250px;
-  display: flex;
-  align-items: center;
-  min-width: 1000px;
-  height: 100%;
-  padding: 0 1rem;
-}
-
-.controls {
-  margin: 0 2rem;
-  width: 150px;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  justify-content: space-evenly;
-  height: 100%;
-  .fa {
-    cursor: pointer;
-    margin: 0;
-    font-size: 2rem !important;
-  }
-}
-
-.cover {
-  height: 100px;
-  width: 100px;
-  margin: 0 2rem;
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-.info {
-  width: 600px;
-  margin: 0 2rem;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.text {
-  display: flex;
-  align-items: center;
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-}
-.title {
-  color: white;
-}
-.artist {
-  color: silver;
-}
-.time {
-  margin-left: auto;
-  margin-left: auto;
-}
-
-.progress-bar {
-  width: 100%;
-  cursor: pointer;
-  overflow: hidden;
-  border-radius: 200px;
-}
-
-.progress-bar[value] {
-  -webkit-appearance: none;
-  appearance: none;
-  background-color: darkgray;
-  color: darkgray;
-  height: 5px;
-}
-
-.progress-bar[value]::-webkit-progress-bar {
-  background-color: rgb(226, 226, 226);
-}
-
-.progress-bar::-webkit-progress-value {
-  background-color: rgb(148, 28, 52);
-}
-</style>
-

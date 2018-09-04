@@ -1,7 +1,7 @@
 <template>
   <div class="files">
     <!-- HEADER -->
-    <Header title="Tunes">
+    <Header title="Library">
       <!-- SEARCH -->
       <div class="search" slot="search">
         <i class="fa fa-search"></i>
@@ -11,6 +11,9 @@
       <template slot="actions">
         <h4 style="cursor:pointer" @click="setFolder" class="header__label small">
           <i class="fa fa-folder"></i> Pick Folder
+        </h4>
+         <h4 class="header__label small">
+           {{songs.length}} Total
         </h4>
       </template>
     </Header>
@@ -54,8 +57,8 @@ export default Vue.extend({
       ipcRenderer.send("setFolder");
     }
   },
-  beforeDestroy(){
-    this.$store.commit('songsFilter',this.search);
+  beforeDestroy() {
+    this.$store.commit("songsFilter", this.search);
   }
 });
 </script>

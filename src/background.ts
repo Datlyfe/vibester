@@ -23,9 +23,10 @@ function createMainWindow() {
     width: 1500,
     height: 800,
     resizable:true,
-    icon: path.join(__static, "icons/128x128.png"),
+    icon: path.join(__static, "logo.png"),
     webPreferences: { webSecurity: false }
   });
+
 
   if (isDevelopment) {
     // Load the url of the dev server if in development mode

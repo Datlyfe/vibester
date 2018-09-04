@@ -2,7 +2,6 @@
   <div class="container">
     <Menu/>
     <Main/>
-    <!-- <Cue/> -->
     <Footer/>
   </div>
 </template>
@@ -11,8 +10,10 @@
 import Vue from "vue";
 import Main from "@/components/Main.vue";
 import Menu from "@/components/Menu.vue";
-import Cue from "@/components/Cue.vue";
 import Footer from "@/components/Footer.vue";
+
+import "font-awesome/css/font-awesome.css";
+import "@/sass/app.scss";
 
 export default Vue.extend({
   name: "home",
@@ -22,7 +23,6 @@ export default Vue.extend({
   components: {
     Menu,
     Main,
-    Cue,
     Footer
   }
 });

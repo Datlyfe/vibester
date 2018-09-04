@@ -1,7 +1,5 @@
 Vibester is a simple and elegent music player powered by Electron and VueJs
 
-![Screenshot](app.png)
-
 
 ### Installation
 
@@ -27,5 +25,5 @@ If you wish you contribute to this project, this road map below that should give
 - speed control
 
 
-This is what i have in mind at the moment but any ideas and suggestions are very welcome.
+This is what i have in mind at the moment but any ideas or suggestions are very welcome.
 

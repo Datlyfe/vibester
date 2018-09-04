@@ -1,5 +1,6 @@
 <template>
-  <div ref="list" class="table animated zoomIn">
+  <div ref="table" class="table animated zoomIn">
+    <!-- TABLE HEADER -->
     <div v-if="songs.length>0" class="row header">
       <div class="cell">Title</div>
       <div class="cell">Artist</div>
@@ -7,8 +8,9 @@
       <div class="cell">Duration</div>
     </div>
 
+    <!-- TABLE BODY -->
     <virtual-list wclass="v-list" :size="35" :remain="16" :bench="0">
-      <div :class="{'selected':selected.includes(song.id)}" tabindex="-1" @contextmenu="showContextMenu" @mousedown="selectSong($event,song.id,index)"  @dblclick="cue(song)" v-for="(song,index) in songs" class="row" :key="song.id">
+      <div :class="{'selected':selected.includes(song.id)}" tabindex="-1" @contextmenu="showContextMenu(song.id)" @mousedown="selectSong($event,song.id,index)"  @dblclick="cue(song)" v-for="(song,index) in songs" class="row" :key="song.id">
         <div class="cell">{{song.title}}</div>
         <div class="cell">{{song.artist}}</div>
         <div class="cell">{{song.album}}</div>
@@ -16,7 +18,6 @@
       </div>
     </virtual-list>
 
-    
 </div>
 </template>
 
@@ -24,11 +25,10 @@
 <script lang="ts">
 import Vue from "vue";
 import bus from "@/services/bus";
-import { Song } from "@/models/song";
+import { ISong } from "@/models/song";
 import electron from "electron";
 import { isCtrlKey } from "@/services/utils";
 import VirtualList from 'vue-virtual-scroll-list'
-
 const { shell, remote } = electron;
 const { Menu } = remote;
 export default Vue.extend({
@@ -42,7 +42,7 @@ export default Vue.extend({
     VirtualList
   },
   methods: {
-    cue(song: Song) {
+    cue(song: ISong) {
       this.$store.dispatch("PLAY_SONG", song);
     },
     selectSong(e, id, index) {
@@ -64,11 +64,11 @@ export default Vue.extend({
       }
     },
     handleOutsideClick(e) {
-      if (this.$refs.list && !this.$refs.list.contains(e.target)) {
+      if (this.$refs.table && !this.$refs.table.contains(e.target)) {
         this.selected = [];
       }
     },
-    showContextMenu() {
+    showContextMenu(songId) {
       const selectedCount = this.selected.length;
       const template: electron.MenuItemConstructorOptions[] = [
         {
@@ -96,7 +96,7 @@ export default Vue.extend({
         },
         {
           label: "Add to playlist",
-          click: () => console.log(this.selected)
+          click: () => this.$store.dispatch("ADD_TO_PLAYLIST",{songId})
         }
       ];
 
@@ -159,72 +159,3 @@ export default Vue.extend({
   }
 });
 </script>
-
-
-<style lang="scss" scoped>
-.table {
-  width: 100%;
-  margin: 2rem 0;
-  animation-duration: 0.3s;
-}
-.row {
-  display: flex;
-  backface-visibility: hidden;
-  width: 100%;
-  // transition: all 0.2s !important;
-}
-.cell {
-  width: 25%;
-  backface-visibility: hidden;
-}
-.row .cell {
-  font-size: 1.6rem;
-  color: darkgray;
-  padding: 0.5rem;
-  font-weight: 400 !important;
-}
-.row.header .cell {
-  font-size: 1.6rem;
-  color: white;
-  font-weight: 700;
-}
-
-.row:hover {
-  cursor: pointer;
-  .cell {
-    color: white !important;
-  }
-}
-.row.selected {
-  background-color: var(--primary);
-  .cell {
-    color: white !important;
-  }
-}
-.row.header:hover {
-  background-color: unset;
-  cursor: unset;
-  transform: unset;
-}
-
-.notunes {
-  color: #f0e6e8;
-  margin: 0 auto;
-  font-weight: 400;
-  padding: 0.25rem 0;
-  font-size: 1.8rem;
-  .fa {
-    font-size: 1.8rem !important;
-  }
-}
-
-.vv-list{
-  &::-webkit-scrollbar {
-    width: 3px;
-    background-color: #303030;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: #c9c9c9;
-  }
-}
-</style>

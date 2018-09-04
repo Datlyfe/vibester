@@ -1,7 +1,7 @@
 // TOOLS
 
-@import "./tools/Mixins";
-@import "./tools/Animations";
+@import "Mixins";
+@import "Animations";
 
 // BASE
 
@@ -56,21 +56,25 @@ body {
   overflow: hidden;
   position: relative;
   height: 100vh;
-  width: 100%;
+  width: 100vw;
   display: grid;
-  grid-template-columns: 250px minmax(1000px,auto) 250px;
+  grid-template-columns: 250px minmax(1000px,auto);
   grid-template-rows: minmax(100%, 75vh);
 }
 
-.modal-body{
-  background: rgb(85, 0, 0);
-  color: white;
-  font-size: 1.6rem;
-}
+
 // COMPONENTS
+
 @import "./components/Loader";
 @import "./components/Placeholder";
 @import "./components/Search";
+@import "./components/Feed";
+@import "./components/Table";
+@import "./components/Menu";
+@import "./components/Player";
+
+
+
 
 
 

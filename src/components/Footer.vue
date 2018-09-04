@@ -7,14 +7,14 @@
 <script lang="ts">
 import Vue from "vue";
 import Player from "@/components/Player.vue";
-import { Song } from "@/models/song";
+import { ISong } from "@/models/song";
 import bus from "@/services/bus";
 import * as media from "@/services/media";
 
 export default Vue.extend({
   data() {
     return {
-      song: {} as Song,
+      song: {} as ISong,
       isLocal: false
     };
   },
@@ -39,7 +39,7 @@ export default Vue.extend({
 </script>
 
 
-<style lang="scss" scoped>
+<style lang="scss">
 .footer {
   position: absolute;
   bottom: 0;
@@ -48,7 +48,7 @@ export default Vue.extend({
   width: 100%;
   height: 100px;
   z-index: 1000;
-  background: rgba(36, 4, 4, 0.85);
+  background: rgba(36, 4, 4, 0.9);
   display: flex;
   align-self: center;
   box-shadow: 0 -5px 5px -5px #1a1a1a;
