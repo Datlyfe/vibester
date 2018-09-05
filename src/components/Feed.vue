@@ -6,8 +6,8 @@
         <div @click="cue(song)" class="image animated fadeIn" :style="getBgImg(song.album.cover_medium)"></div>
       </div>
       <div class="song_info">
-        <span class="title">{{song.title,12}}</span>
-        <span class="artist">{{song.artist.name}}</span>          
+        <span class="title">{{shorten(song.title,10)}}</span>
+        <span class="artist">{{shorten(song.artist.name,10)}}</span>          
       </div>
     </li>
   </ul>
@@ -17,10 +17,13 @@
 <script lang="ts">
 import Vue from "vue";
 import bus from "@/services/bus";
+import {shorten} from "@/services/helpers";
+
 import { ISong } from "@/models/song";
 export default Vue.extend({
   props: ["songs"],
   methods: {
+    shorten,
     getBgImg(src: string) {
       return { backgroundImage: `url(${src})` };
     },

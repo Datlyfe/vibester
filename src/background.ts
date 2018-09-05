@@ -21,7 +21,7 @@ protocol.registerStandardSchemes(["app"], { secure: true });
 function createMainWindow() {
   const window = new BrowserWindow({
     width: 1500,
-    height: 800,
+    height: 790,
     resizable:true,
     icon: path.join(__static, "logo.png"),
     webPreferences: { webSecurity: false }

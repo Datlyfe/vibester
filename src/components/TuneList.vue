@@ -9,7 +9,7 @@
     </div>
 
     <!-- TABLE BODY -->
-    <virtual-list wclass="v-list" :size="35" :remain="16" :bench="0">
+    <virtual-list wclass="v-list" :size="35" :remain="14" :bench="0">
       <div :class="{'selected':selected.includes(song.id)}" tabindex="-1" @contextmenu="showContextMenu(song.id)" @mousedown="selectSong($event,song.id,index)"  @dblclick="cue(song)" v-for="(song,index) in songs" class="row" :key="song.id">
         <div class="cell">{{song.title}}</div>
         <div class="cell">{{song.artist}}</div>

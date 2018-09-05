@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 
-const loadView = (view:string) => {
+const loadView = (view: string) => {
   return () => import(`@/views/${view}.vue`);
 };
 
@@ -20,8 +20,18 @@ export default new Router({
       component: loadView("Files")
     },
     {
+      path: "/most-played",
+      name: "most-played",
+      component: loadView("Playlists")
+    },
+    {
       path: "/playlists",
       name: "playlists",
+      component: loadView("Playlists")
+    },
+    {
+      path: "/settings",
+      name: "settings",
       component: loadView("Playlists")
     }
   ]

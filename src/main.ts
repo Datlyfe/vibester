@@ -24,6 +24,9 @@ new Vue({
   router,
   store,
   created() {
+    // window.addEventListener('resize',(e)=>{
+    //   console.log(e);
+    // })
     // db.table('songs').clear();
     // db.table('playlists').clear();
 
