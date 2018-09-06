@@ -34,15 +34,14 @@
   }
 
   &__list {
+    list-style: none;
     &__item {
       position: relative;
       padding-left: 1.5rem;
       backface-visibility: hidden;
-      display: flex;
-      align-items: center;
       font-size: 1.6rem;
       margin: 2rem 0;
-      color: #f0e6e8;
+      color: #dfd6d8;
       cursor: pointer;
       &:hover {
         color: white;
@@ -78,4 +77,5 @@
   .active-bar {
     background: white;
   }
+  color: white !important;
 }

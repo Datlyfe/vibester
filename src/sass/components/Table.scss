@@ -10,8 +10,25 @@
   // transition: all 0.2s !important;
 }
 .cell {
-  width: 25%;
   backface-visibility: hidden;
+}
+.row{
+  .title{
+    width: 25%;
+  }
+  .artist{
+    width: 25%;
+  }
+  .album{
+    width: 25%;
+  }
+  .duration{
+    width: 10%;
+    text-align: center;
+  }
+  .genre{
+    width: 15%;
+  }
 }
 .row .cell {
   font-size: 1.6rem;

@@ -28,16 +28,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 1.5rem 0.5rem;
+  margin: 1.35rem 0.5rem;
   width: calc(100% / 8 - 1rem);
 
   // @include respond-above(xl) {
   //   width: calc(100% / 7 - 2rem);
   // }
-  @include respond-above(xxl) {
-    margin: 1.5rem 0.75rem;
-    width: calc(100% / 10 - 1.5rem);
-  }
+  // @include respond-above(xxl) {
+  //   margin: 1.5rem 0.75rem;
+  //   width: calc(100% / 7 - 1.5rem);
+  // }
 }
 
 .song_image {

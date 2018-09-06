@@ -1,5 +1,5 @@
 <template>
-  <div class="discover">
+  <div class="discover animated fadeIn">
     <!-- HEADER -->
     <Header title="Discover">
       <div class="search" slot="search">
@@ -77,6 +77,7 @@ export default Vue.extend({
     },
     async search(index = 0) {
       this.mode = "search";
+      this.page=1;
       this.loading = true;
       const { data, next, prev } = await this.$getResource("search", {
         term: this.term,

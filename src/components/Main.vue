@@ -19,7 +19,6 @@ export default Vue.extend({});
   background: #232323;
   overflow-y: scroll;
   overflow-x: hidden;
-  padding: 3rem 4rem;
   padding-bottom: 10rem;
 
   &::-webkit-scrollbar-track {

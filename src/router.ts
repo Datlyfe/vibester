@@ -20,19 +20,19 @@ export default new Router({
       component: loadView("Files")
     },
     {
-      path: "/most-played",
-      name: "most-played",
-      component: loadView("Playlists")
-    },
-    {
       path: "/playlists",
       name: "playlists",
       component: loadView("Playlists")
     },
     {
+      path: "/most-played",
+      name: "most-played",
+      component: null
+    },
+    {
       path: "/settings",
       name: "settings",
-      component: loadView("Playlists")
+      component: null
     }
   ]
 });

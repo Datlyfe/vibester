@@ -157,7 +157,7 @@ export const parseMusicMetadata = (
     album: common.album,
     artist: common.artist,
     duration: parseDuration(format.duration),
-    genre: common.genre,
+    genre: common.genre || ['-'],
     year: common.year
   };
   return metadata;

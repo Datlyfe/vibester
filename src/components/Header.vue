@@ -45,5 +45,21 @@ export default Vue.extend({
       color: white;
     }
   }
+  .actions {
+    margin-left: auto;
+    .fa-plus {
+      transition: all 0.3s;
+      color: darkgray;
+      cursor: pointer;
+      font-weight: 300;
+      font-size: 1.4rem;
+      border: 1px solid darkgray;
+      padding: 0.4rem 0.6rem;
+      &:hover {
+        color: white;
+        border-color: white;
+      }
+    }
+  }
 }
 </style>

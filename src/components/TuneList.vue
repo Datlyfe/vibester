@@ -1,20 +1,23 @@
 <template>
-  <div ref="table" class="table animated zoomIn">
+  <div ref="table" class="table">
     <!-- TABLE HEADER -->
     <div v-if="songs.length>0" class="row header">
-      <div class="cell">Title</div>
-      <div class="cell">Artist</div>
-      <div class="cell">Album</div>
-      <div class="cell">Duration</div>
+      <div class="cell title">Title</div>
+      <div class="cell artist">Artist</div>
+      <div class="cell album">Album</div>
+      <div class="cell genre">Genre</div>
+      <div class="cell duration">Duration</div>
+
     </div>
 
     <!-- TABLE BODY -->
-    <virtual-list wclass="v-list" :size="35" :remain="14" :bench="0">
+    <virtual-list wclass="v-list" :size="35" :remain="13" :bench="0">
       <div :class="{'selected':selected.includes(song.id)}" tabindex="-1" @contextmenu="showContextMenu(song.id)" @mousedown="selectSong($event,song.id,index)"  @dblclick="cue(song)" v-for="(song,index) in songs" class="row" :key="song.id">
-        <div class="cell">{{song.title}}</div>
-        <div class="cell">{{song.artist}}</div>
-        <div class="cell">{{song.album}}</div>
-        <div class="cell">{{song.duration}}</div>
+        <div class="cell title">{{song.title}}</div>
+        <div class="cell artist">{{song.artist}}</div>
+        <div class="cell album">{{song.album}}</div>
+        <div class="cell genre">{{song.genre[0]}}</div>
+        <div class="cell duration">{{song.duration}}</div>
       </div>
     </virtual-list>
 
@@ -28,7 +31,7 @@ import bus from "@/services/bus";
 import { ISong } from "@/models/song";
 import electron from "electron";
 import { isCtrlKey } from "@/services/utils";
-import VirtualList from 'vue-virtual-scroll-list'
+import VirtualList from "vue-virtual-scroll-list";
 const { shell, remote } = electron;
 const { Menu } = remote;
 export default Vue.extend({
@@ -38,7 +41,7 @@ export default Vue.extend({
       selected: []
     };
   },
-  components:{
+  components: {
     VirtualList
   },
   methods: {
@@ -74,8 +77,8 @@ export default Vue.extend({
         {
           label:
             selectedCount > 1
-              ? `${selectedCount} Tunes selected`
-              : `${selectedCount} Tune selected`,
+              ? `${selectedCount} Tunes Selected`
+              : `${selectedCount} Tune Selected`,
           enabled: false
         },
         {
@@ -96,7 +99,7 @@ export default Vue.extend({
         },
         {
           label: "Add to playlist",
-          click: () => this.$store.dispatch("ADD_TO_PLAYLIST",{songId})
+          click: () => this.$store.dispatch("ADD_TO_PLAYLIST", { songId })
         }
       ];
 
@@ -148,8 +151,10 @@ export default Vue.extend({
     isLeftClick: e => e.button === 0,
     isRightClick: e => e.button === 2
   },
-  mounted(){
-    document.getElementsByClassName('v-list')[0].parentElement.classList.add('vv-list')
+  mounted() {
+    document
+      .getElementsByClassName("v-list")[0]
+      .parentElement.classList.add("vv-list");
   },
   created() {
     document.addEventListener("mousedown", this.handleOutsideClick);

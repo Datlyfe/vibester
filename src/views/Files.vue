@@ -1,5 +1,5 @@
 <template>
-  <div class="files">
+  <div class="files animated fadeIn">
     <!-- HEADER -->
     <Header title="Library">
       <!-- SEARCH -->
