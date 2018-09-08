@@ -7,10 +7,13 @@ import { ISong } from "@/models/song";
 
 export const stat = util.promisify(fs.stat);
 
+
+// CHECK IF FILE IS PLAYBALE
 export const isPlayableMedia = (filepath: string): boolean => {
   return ["m4a", "mp3"].includes(path.extname(filepath).substring(1));
 };
 
+// READ DIRECTORY FILES
 export const loadMediaFiles = (directory: string): Promise<string[]> => {
   return new Promise(resolve => {
     recursiveFiles(directory, (err, files: string[]) => {
@@ -23,6 +26,7 @@ export const loadMediaFiles = (directory: string): Promise<string[]> => {
   });
 };
 
+// PARSE DURATION FROM SECONDS TO STRING
 export const parseDuration = (duration: number | null): string => {
   if (duration !== null) {
     let hours = Math.trunc(duration / 3600);
@@ -41,6 +45,7 @@ export const parseDuration = (duration: number | null): string => {
   return "00:00";
 };
 
+// SONG DURATION FROM FILE
 export const getAudioDuration = (trackPath: string): Promise<number> => {
   const audio = new Audio();
 
@@ -61,10 +66,12 @@ export const getAudioDuration = (trackPath: string): Promise<number> => {
   });
 };
 
+// PARSE BASE64 DATA TO IMAGE URL FORMAT
 export const parseBase64 = (format: string, data: string): string => {
   return `data:image/${format};base64,${data}`;
 };
 
+// PARSE FILE PATH TO URI
 export const parseUri = (uri: string): string => {
   const root = process.platform === "win32" ? "" : path.parse(uri).root;
   const location = uri
@@ -73,6 +80,7 @@ export const parseUri = (uri: string): string => {
     .reduce((a, b) => path.join(a, b));
   return `file://${root}${location}`;
 };
+
 
 export const getDefaultMetadata = (): ISong => ({
   album: "Unknown",
@@ -130,6 +138,7 @@ export const getMetadata = async (trackPath: string): Promise<ISong> => {
   return basicMetadata;
 };
 
+// FETCH SONG COVER FROM FILE PATH
 export const fetchCover = async (trackPath: string): Promise<string | null> => {
   if (!trackPath) {
     return null;
@@ -143,10 +152,12 @@ export const fetchCover = async (trackPath: string): Promise<string | null> => {
   return null;
 };
 
+// JS PLEASE...
 export const upper = (string: string) => {
   return string.replace(/^\w/, s => s.toUpperCase());
 };
 
+// PARSE SONG METADATA
 export const parseMusicMetadata = (
   data: mm.IAudioMetadata,
   trackPath: string
@@ -157,12 +168,13 @@ export const parseMusicMetadata = (
     album: common.album,
     artist: common.artist,
     duration: parseDuration(format.duration),
-    genre: common.genre || ['-'],
+    genre: common.genre || ['-'], // not sure about this...
     year: common.year
   };
   return metadata;
 };
 
+// SORT STRING[]
 export const simpleSort = (array: ISong[], sorting: "asc" | "desc") => {
   if (sorting === "asc") {
     array.sort((a, b) => (a.title > b.title ? 1 : -1));

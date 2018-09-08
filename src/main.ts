@@ -39,7 +39,6 @@ new Vue({
     db.table("playlists")
       .toArray()
       .then((playlists: IPlaylist[]) => {
-        console.log(playlists);
         store.state.playlists = playlists;
       });
 

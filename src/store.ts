@@ -47,7 +47,7 @@ export default new Vuex.Store({
         state.localSongsQueue.push(song);
       }
     },
-    PLAY_SONG({ state }, song) {
+    PLAY_SONG(_, song) {
       bus.$emit("newCue", song, true);
     },
     PLAY_NEXT_SONG({ state, dispatch }, { id }) {
@@ -74,7 +74,16 @@ export default new Vuex.Store({
       p.id = await db.table("playlists").add(p);
       state.playlists.push(p);
     },
-
+    RENAME_PLAYLIST({ state }, { id, name }) {
+      let index = state.playlists.findIndex(song => song.id == id);
+      state.playlists[index].name = name;
+      db.table("playlists").update(id, { name });
+    },
+    DELETE_PLAYLIST({ state }, id) {
+      let index = state.playlists.findIndex(song => song.id == id);
+      state.playlists.splice(index, 1);
+      db.table("playlists").delete(id);
+    },
     async ADD_TO_PLAYLIST({ state }, { songId }) {
       let p: IPlaylist = await db.table("playlists").get(55);
       let song: ISong = await db.table("songs").get(songId);

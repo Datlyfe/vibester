@@ -21,7 +21,7 @@ protocol.registerStandardSchemes(["app"], { secure: true });
 function createMainWindow() {
   const window = new BrowserWindow({
     minWidth: 1500,
-    minHeight: 790,
+    minHeight: 780,
     resizable:true,
     icon: path.join(__static, "logo.png"),
     webPreferences: { webSecurity: false }
@@ -31,7 +31,7 @@ function createMainWindow() {
   if (isDevelopment) {
     // Load the url of the dev server if in development mode
     window.loadURL(process.env.WEBPACK_DEV_SERVER_URL as string);
-    if (!process.env.IS_TEST) window.webContents.openDevTools();
+    // if (!process.env.IS_TEST) window.webContents.openDevTools();
   } else {
     createProtocol("app");
     //   Load the index.html when not in development

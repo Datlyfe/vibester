@@ -7,8 +7,8 @@
         <div @click="cue(song)" class="image animated fadeIn" :style="getBgImg(song.album.cover_medium)"></div>
       </div>
       <div class="song_info">
-        <span class="title">{{shorten(song.title,10)}}</span>
-        <span class="artist">{{shorten(song.artist.name,10)}}</span>          
+        <span class="title">{{shorten(song.title,17)}}</span>
+        <span class="artist">{{shorten(song.artist.name,17)}}</span>          
       </div>
     </li>
   </ul>

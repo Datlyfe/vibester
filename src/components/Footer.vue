@@ -10,6 +10,8 @@ import Player from "@/components/Player.vue";
 import { ISong } from "@/models/song";
 import bus from "@/services/bus";
 import * as media from "@/services/media";
+import {parseSong} from "@/services/utils";
+
 
 export default Vue.extend({
   data() {
@@ -28,10 +30,7 @@ export default Vue.extend({
         let cover = await media.fetchCover(song.path);
         this.song = { ...song, cover, src: media.parseUri(song.path) };
       } else {
-        let { preview, title, id } = song;
-        let { cover_medium: cover } = song.album;
-        let { name: artist } = song.artist;
-        this.song = { artist, src: preview, title, cover, id };
+        this.song=parseSong(song);
       }
     });
   }

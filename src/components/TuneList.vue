@@ -32,6 +32,7 @@ import { ISong } from "@/models/song";
 import electron from "electron";
 import { isCtrlKey } from "@/services/utils";
 import VirtualList from "vue-virtual-scroll-list";
+import { IPlaylist } from '@/models/playlist';
 const { shell, remote } = electron;
 const { Menu } = remote;
 export default Vue.extend({
@@ -73,6 +74,16 @@ export default Vue.extend({
     },
     showContextMenu(songId) {
       const selectedCount = this.selected.length;
+      const playlistSubMenu:electron.MenuItemConstructorOptions[]=[
+        {label:'Create New Playlist...',click:()=>{}},
+        {type:'separator'}
+      ]
+      this.$store.state.playlists.forEach((p:IPlaylist)=> {
+        playlistSubMenu.push({
+          label:p.name,
+          click:()=>{console.log(`add ${this.selected} to ${p.id}`)}
+        })
+      });
       const template: electron.MenuItemConstructorOptions[] = [
         {
           label:
@@ -99,7 +110,7 @@ export default Vue.extend({
         },
         {
           label: "Add to playlist",
-          click: () => this.$store.dispatch("ADD_TO_PLAYLIST", { songId })
+          submenu:playlistSubMenu
         }
       ];
 

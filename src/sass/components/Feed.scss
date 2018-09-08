@@ -6,13 +6,15 @@
 }
 
 .song_info {
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   margin: 0 2rem;
   .title {
     display: block;
+    width: max-content;
   }
   .artist {
     color: silver;
+    width: max-content;
     display: block;
   }
   .remove {
