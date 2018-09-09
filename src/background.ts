@@ -20,8 +20,9 @@ let mainWindow: any;
 protocol.registerStandardSchemes(["app"], { secure: true });
 function createMainWindow() {
   const window = new BrowserWindow({
+    width:1705,
     minWidth: 1500,
-    minHeight: 780,
+    minHeight: 845,
     resizable:true,
     icon: path.join(__static, "logo.png"),
     webPreferences: { webSecurity: false }

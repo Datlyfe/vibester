@@ -1,9 +1,9 @@
 <template>
   <ul class="songs_list">
     <li @click="cue(song)" class="song" v-for="song in songs" :key="song.id">
-      <!-- <div class="placeholder js-loading"> -->
       <div class="placeholder js-loading">
-        <!-- <img @load="handleImageLoad"  class="preloader" :src="song.album.cover_medium"> -->
+      <!-- <div class="placeholder js-loading"> -->
+        <img @load="handleImageLoad"  class="preloader" :src="song.album.cover_medium">
         <div @click="cue(song)" class="image animated fadeIn" :style="getBgImg(song.album.cover_medium)"></div>
       </div>
       <div class="song_info">
@@ -18,7 +18,7 @@
 <script lang="ts">
 import Vue from "vue";
 import bus from "@/services/bus";
-import {shorten} from "@/services/helpers";
+import { shorten } from "@/services/helpers";
 
 import { ISong } from "@/models/song";
 export default Vue.extend({
@@ -32,7 +32,7 @@ export default Vue.extend({
       bus.$emit("newCue", song, false);
     },
     handleImageLoad(e) {
-      // e.target.parentNode.classList.remove("js-loading");
+      e.target.parentNode.classList.remove("js-loading");
       e.target.remove();
     }
   }

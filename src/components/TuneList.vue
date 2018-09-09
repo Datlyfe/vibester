@@ -11,7 +11,7 @@
     </div>
 
     <!-- TABLE BODY -->
-    <virtual-list wclass="v-list" :size="35" :remain="13" :bench="0">
+    <virtual-list wclass="v-list" :size="35" :remain="15" :bench="0">
       <div :class="{'selected':selected.includes(song.id)}" tabindex="-1" @contextmenu="showContextMenu(song.id)" @mousedown="selectSong($event,song.id,index)"  @dblclick="cue(song)" v-for="(song,index) in songs" class="row" :key="song.id">
         <div class="cell title">{{song.title}}</div>
         <div class="cell artist">{{song.artist}}</div>
@@ -32,7 +32,7 @@ import { ISong } from "@/models/song";
 import electron from "electron";
 import { isCtrlKey } from "@/services/utils";
 import VirtualList from "vue-virtual-scroll-list";
-import { IPlaylist } from '@/models/playlist';
+import { IPlaylist } from "@/models/playlist";
 const { shell, remote } = electron;
 const { Menu } = remote;
 export default Vue.extend({
@@ -74,19 +74,29 @@ export default Vue.extend({
     },
     showContextMenu(songId) {
       const selectedCount = this.selected.length;
-      const playlistSubMenu:electron.MenuItemConstructorOptions[]=[
-        {label:'New Playlist',click:()=>{
-          this.$store.dispatch('NEW_PLAYLIST').then((p:IPlaylist)=>{
-            this.$store.dispatch('ADD_TO_PLAYLIST',{songsIds:this.selected,playlistId:p.id})
-          })
-        }},
-        {type:'separator'}
-      ]
-      this.$store.state.playlists.forEach((p:IPlaylist)=> {
+      const playlistSubMenu: electron.MenuItemConstructorOptions[] = [
+        {
+          label: "New Playlist",
+          click: () => {
+            this.$store.dispatch("NEW_PLAYLIST").then((p: IPlaylist) => {
+              this.$store.dispatch("ADD_TO_PLAYLIST", {
+                songsIds: this.selected,
+                playlistId: p.id
+              });
+            });
+          }
+        },
+        { type: "separator" }
+      ];
+      this.$store.state.playlists.forEach((p: IPlaylist) => {
         playlistSubMenu.push({
-          label:p.name,
-          click:()=>this.$store.dispatch('ADD_TO_PLAYLIST',{songsIds:this.selected,playlistId:p.id})
-        })
+          label: p.name,
+          click: () =>
+            this.$store.dispatch("ADD_TO_PLAYLIST", {
+              songsIds: this.selected,
+              playlistId: p.id
+            })
+        });
       });
       const template: electron.MenuItemConstructorOptions[] = [
         {
@@ -98,7 +108,7 @@ export default Vue.extend({
         },
         {
           label: "Add to playlist",
-          submenu:playlistSubMenu
+          submenu: playlistSubMenu
         }
       ];
 

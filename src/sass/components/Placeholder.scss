@@ -1,29 +1,27 @@
 .placeholder {
-    position: relative;
-    transition: all .5s;
-    width: 100%;
-    margin-bottom: 1rem;
-    height: auto;
-    background-repeat: no-repeat;
-    background-size: cover;
-    border: 2px solid #dfdfdf;
-    background-image: linear-gradient(
-		to bottom,
-		rgba(#162229, .75),
-		rgba(#DB1D40, .75),
-		rgba(#162229, .75),
-		rgba(#7E2236, .75)
+  position: relative;
+  transition: all 0.5s;
+  width: 100%;
+  margin-bottom: 0.75rem;
+  height: auto;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 2px solid #dfdfdf;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(#162229, 0.75),
+    rgba(#db1d40, 0.75),
+    rgba(#162229, 0.75),
+    rgba(#7e2236, 0.75)
   );
 
-  .preloader{
+  .preloader {
     display: none;
   }
 
-
-  
-  .image{
+  .image {
     backface-visibility: hidden;
-    animation-duration:0s;
+    animation-duration: 0.1s;
     width: 100%;
     padding-top: 100%;
     object-fit: cover;
@@ -32,15 +30,13 @@
   }
 }
 
-.placeholder__feed{
+.placeholder__feed {
   width: 70px;
   height: 70px;
   border: 2px solid #dfdfdf;
-
 }
 
-.c{
+.c {
   width: 200px;
   height: 200px;
 }
-

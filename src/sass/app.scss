@@ -130,7 +130,7 @@ body {
 }
 
 .empty {
-  animation-duration: .4s;
+  animation-duration: 0.4s;
   position: absolute;
   top: 40%;
   left: 50%;
@@ -153,8 +153,8 @@ body {
   }
 }
 
-.p-feed{
-  animation-duration: .5s;
+.p-feed {
+  animation-duration: 0.5s;
 }
 
 .p-feed-list {
@@ -168,9 +168,9 @@ body {
     margin-right: 2rem;
     cursor: pointer;
     display: flex;
-    width: calc(100%/2 - 2rem );
+    width: calc(100% / 2 - 2rem);
     align-items: center;
-    .index{
+    .index {
       font-size: 1.6rem;
     }
     .p-song-info {
@@ -178,7 +178,7 @@ body {
       font-size: 1.6rem;
       .title {
         color: white;
-        margin-right:1rem;
+        margin-right: 1rem;
         // display: block;
       }
       .artist {

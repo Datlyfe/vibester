@@ -11,24 +11,25 @@
 <script lang="ts">
 import Vue from "vue";
 export default Vue.extend({
-  data(){
-    return{
-      t:this.title
-    }
+  data() {
+    return {
+      t: this.title
+    };
   },
   props: {
     title: {
       type: String,
-      required: true
+      required: false
     },
-    cap:{
-      type:Boolean,
-      default:true
+    cap: {
+      type: Boolean,
+      default: true,
+      required: false
     }
   },
-  mounted(){
-    if(this.cap){
-      this.t=(this.title as String).toUpperCase();
+  mounted() {
+    if (this.cap) {
+      this.t = this.title && (this.title as String).toUpperCase();
     }
   }
 });

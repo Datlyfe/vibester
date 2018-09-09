@@ -6,7 +6,7 @@
     </div>
   </div>
   <div v-else>
-    <Header :cap="false" v-if="p.name" :title="getName(p.name)">
+    <Header :cap="false" :title="p.name">
       <div class="search" slot="search"></div> <!-- IDK FILLER -->
       <template class="actions" slot="actions">
          <h4 @click="$emit('delete',p)" style="cursor:pointer"  class="header__label small">
@@ -34,6 +34,9 @@
           <i class="fa fa-info"></i>
           <span>Playlist is Empty</span>
         </div>
+         <!-- <div class="msg">
+          <span>Add Some Tracks Here </span>
+        </div> -->
       </div>
     </div>
   </div>
@@ -45,11 +48,10 @@
 <script lang="ts">
 import Vue from "vue";
 import bus from "@/services/bus";
-import Header from '@/components/Header.vue';
+import Header from "@/components/Header.vue";
 
 import { IPlaylist } from "@/models/playlist";
-import { ISong } from '@/models/song';
-
+import { ISong } from "@/models/song";
 
 export default Vue.extend({
   props: ["p", "noPlaylist"],
@@ -66,8 +68,8 @@ export default Vue.extend({
     getBgImg(src) {
       return { backgroundImage: `url(${src})` };
     },
-    getName(name){
-      return `Reading From PLaylist : ${name}`
+    getName(name) {
+      return `Reading From PLaylist : ${name}`;
     }
   },
   computed: {
@@ -75,7 +77,6 @@ export default Vue.extend({
       return this.p.songs && this.p.songs.length == 0;
     }
   },
-  mounted() {
-  }
+  mounted() {}
 });
 </script>
