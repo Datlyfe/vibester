@@ -1,6 +1,6 @@
 <template>
     <div class="header">
-      <h1 class="header__label">{{title}}</h1>
+      <h1 class="header__label">{{t}}</h1>
       <slot name="info"></slot>
       <slot name="search"></slot>
       <slot name="actions"></slot>
@@ -11,10 +11,24 @@
 <script lang="ts">
 import Vue from "vue";
 export default Vue.extend({
+  data(){
+    return{
+      t:this.title
+    }
+  },
   props: {
     title: {
       type: String,
       required: true
+    },
+    cap:{
+      type:Boolean,
+      default:true
+    }
+  },
+  mounted(){
+    if(this.cap){
+      this.t=(this.title as String).toUpperCase();
     }
   }
 });
@@ -26,7 +40,6 @@ export default Vue.extend({
   display: flex;
   align-items: center;
   &__label {
-    text-transform: uppercase;
     color: white;
     font-weight: 400;
     padding: 0.25rem 0;

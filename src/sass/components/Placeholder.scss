@@ -6,7 +6,7 @@
     height: auto;
     background-repeat: no-repeat;
     background-size: cover;
-    border: 3px solid #dfdfdf;
+    border: 2px solid #dfdfdf;
     background-image: linear-gradient(
 		to bottom,
 		rgba(#162229, .75),
@@ -19,6 +19,7 @@
     display: none;
   }
 
+
   
   .image{
     backface-visibility: hidden;
@@ -29,6 +30,13 @@
     background-size: cover;
     background-position: center;
   }
+}
+
+.placeholder__feed{
+  width: 70px;
+  height: 70px;
+  border: 2px solid #dfdfdf;
+
 }
 
 .c{

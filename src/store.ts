@@ -73,6 +73,7 @@ export default new Vuex.Store({
       let p: IPlaylist = { name: "New Playlist", songs: [] };
       p.id = await db.table("playlists").add(p);
       state.playlists.push(p);
+      return p;
     },
     RENAME_PLAYLIST({ state }, { id, name }) {
       let index = state.playlists.findIndex(song => song.id == id);
@@ -84,12 +85,16 @@ export default new Vuex.Store({
       state.playlists.splice(index, 1);
       db.table("playlists").delete(id);
     },
-    async ADD_TO_PLAYLIST({ state }, { songId }) {
-      let p: IPlaylist = await db.table("playlists").get(55);
-      let song: ISong = await db.table("songs").get(songId);
-      p.name = `Test${p.id}`;
-      p.songs.push(song);
-      await db.table("playlists").put(p);
+    async ADD_TO_PLAYLIST({ state }, { songsIds, playlistId }) {
+      let index = state.playlists.findIndex(song => song.id == playlistId);
+      let p: IPlaylist = await db.table("playlists").get(playlistId);
+      for (const songId of songsIds) {
+        let song: ISong = await db.table("songs").get(songId);
+        // song.cover=await media.fetchCover(song.path); // BIG PERFORMANCE HIT
+        state.playlists[index].songs.push(song);
+        p.songs.push(song);
+      }
+      db.table("playlists").update(p.id, { songs: p.songs });
     }
   }
 });

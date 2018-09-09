@@ -75,13 +75,17 @@ export default Vue.extend({
     showContextMenu(songId) {
       const selectedCount = this.selected.length;
       const playlistSubMenu:electron.MenuItemConstructorOptions[]=[
-        {label:'Create New Playlist...',click:()=>{}},
+        {label:'New Playlist',click:()=>{
+          this.$store.dispatch('NEW_PLAYLIST').then((p:IPlaylist)=>{
+            this.$store.dispatch('ADD_TO_PLAYLIST',{songsIds:this.selected,playlistId:p.id})
+          })
+        }},
         {type:'separator'}
       ]
       this.$store.state.playlists.forEach((p:IPlaylist)=> {
         playlistSubMenu.push({
           label:p.name,
-          click:()=>{console.log(`add ${this.selected} to ${p.id}`)}
+          click:()=>this.$store.dispatch('ADD_TO_PLAYLIST',{songsIds:this.selected,playlistId:p.id})
         })
       });
       const template: electron.MenuItemConstructorOptions[] = [
@@ -91,22 +95,6 @@ export default Vue.extend({
               ? `${selectedCount} Tunes Selected`
               : `${selectedCount} Tune Selected`,
           enabled: false
-        },
-        {
-          label: "Play Next",
-          click: () =>
-            this.$store.dispatch("ADD_TO_QUEUE", {
-              songs: this.selected,
-              immediate: true
-            })
-        },
-        {
-          label: "Add to Queue",
-          click: () =>
-            this.$store.dispatch("ADD_TO_QUEUE", {
-              songs: this.selected,
-              immediate: false
-            })
         },
         {
           label: "Add to playlist",
