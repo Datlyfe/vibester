@@ -63,6 +63,7 @@
   .fa {
     font-size: 2.2rem;
     margin: 0 1rem;
+    width: 20px;
   }
 }
 
@@ -99,10 +100,6 @@ input[type="range"] {
   display: block;
   width: 100%;
 }
-
-.time {
-}
-
 .progress-bar {
   width: 100%;
   cursor: pointer;

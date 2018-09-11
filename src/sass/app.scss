@@ -96,14 +96,12 @@ body {
   padding: 0.75rem 0;
   color: darkgray;
   margin: 0.5rem 0;
-  .name {
-  }
   .total {
     position: absolute;
     right: 0;
     top: 50%;
     transform: translateY(-50%);
-    color: #dfdfdf;
+    // color: #dfdfdf;
     font-size: 1.4rem;
     font-weight: 400;
   }
@@ -129,15 +127,10 @@ body {
   font-size: 1.8rem;
 }
 .p-active {
-  // color: #f5f5f5;
-  color: brown;
+  color: ghostwhite;
   &:hover {
-    // color: #f5f5f5;
-    color: brown;
+    color: ghostwhite;
   }
-  // .p-active-bar {
-  //   background: #db1d40;
-  // }
 }
 
 .empty {
@@ -202,6 +195,64 @@ body {
       font-size: 1.6rem;
       color: silver;
     }
+  }
+}
+
+.playing-indicator {
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  .animation {
+    width: 18px;
+    height: 4px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    .bar {
+      position: relative;
+      top: 5px;
+      height: 18px;
+      width: 4px;
+      align-items: baseline;
+      background-color: rgb(139, 4, 4);
+      animation: bar-animate;
+      animation-duration: 1s;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+      transform-origin: bottom;
+      transform: scale3d(1, 0, 1);
+      will-change: transform;
+
+      &.bar-second {
+        animation-delay: 0.55s;
+      }
+
+      &.bar-third {
+        animation-delay: 0.25s;
+      }
+
+      &:not(:last-child) {
+        margin-right: 1px;
+      }
+    }
+  }
+}
+
+@keyframes bar-animate {
+  from {
+    transform: scale3d(1, 0, 1);
+  }
+
+  50% {
+    transform: scale3d(1, 1, 1);
+  }
+
+  to {
+    transform: scale3d(1, 0, 1);
   }
 }
 

@@ -5,7 +5,6 @@
       <div class="cell title">Title</div>
       <div class="cell artist">Artist</div>
       <div class="cell album">Album</div>
-      <div class="cell genre">Genre</div>
       <div class="cell duration">Duration</div>
 
     </div>
@@ -16,8 +15,16 @@
         <div class="cell title">{{song.title}}</div>
         <div class="cell artist">{{song.artist}}</div>
         <div class="cell album">{{song.album}}</div>
-        <div class="cell genre">{{song.genre[0]}}</div>
         <div class="cell duration">{{song.duration}}</div>
+        <div style="width:15%" class="cell indicator">
+          <div v-show="songPlaying && songPlaying.id==song.id" class="playing-indicator">
+            <div class="animation">
+              <div class="bar bar-first"></div>
+              <div class="bar bar-second"></div>
+              <div class="bar bar-third"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </virtual-list>
 

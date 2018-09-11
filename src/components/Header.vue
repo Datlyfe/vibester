@@ -66,12 +66,11 @@ export default Vue.extend({
       color: darkgray;
       cursor: pointer;
       font-weight: 300;
-      font-size: 1.4rem;
-      border: 1px solid darkgray;
-      padding: 0.4rem 0.6rem;
+      font-size: 2rem;
+      position: relative;
+      right: -2px;
       &:hover {
-        color: white;
-        border-color: white;
+        color: ghostwhite;
       }
     }
   }

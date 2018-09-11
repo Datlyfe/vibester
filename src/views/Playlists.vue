@@ -71,6 +71,7 @@ export default Vue.extend({
       context.popup({});
     },
     startEdit(p: IPlaylist) {
+      if(this.write) return;
       this.selectedPlaylist = p;
       this.write = true;
       // BIG HACK INCOMING

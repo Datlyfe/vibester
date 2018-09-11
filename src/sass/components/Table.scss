@@ -11,22 +11,27 @@
 .cell {
   backface-visibility: hidden;
 }
-.row{
-  .title{
+.row {
+  .title {
     width: 25%;
   }
-  .artist{
+  .artist {
     width: 25%;
   }
-  .album{
+  .album {
     width: 25%;
   }
-  .duration{
+  .duration {
     width: 10%;
     text-align: center;
   }
-  .genre{
+  .genre {
     width: 15%;
+  }
+  .indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 .row .cell {
@@ -53,12 +58,20 @@
     color: white !important;
   }
 }
-.songPlaying{
-  .cell{
+.row.selected {
+  .bar {
+    background-color: ghostwhite !important;
+  }
+}
+.row .selected .indicator .playing-indicator .animation .bar {
+  background-color: ghostwhite !important;
+}
+.songPlaying {
+  .cell {
     color: white !important;
   }
-  &:hover{
-    color: white !important
+  &:hover {
+    color: white !important;
   }
 }
 .row.header:hover {
@@ -78,7 +91,7 @@
   }
 }
 
-.vv-list{
+.vv-list {
   &::-webkit-scrollbar {
     width: 3px;
     background-color: #303030;

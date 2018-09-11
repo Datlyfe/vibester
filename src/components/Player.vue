@@ -22,7 +22,12 @@
         <span style="flex:1"></span>
         <!-- VOLUME -->
         <span class="volume">
-          <i class="fa fa-volume-down"></i>
+          <i @click="unmute" v-if="volumeLevel==0" class="fa fa-volume-off"></i>
+          <template v-else >
+            <i @click="mute" v-if="volumeLevel<500" class="fa fa-volume-down"></i>
+            <i @click="mute" v-else class="fa fa-volume-up"></i>
+          </template>
+
           <input class="volume_range" @input="changeVolume" type="range"  step="10" title="volume" min="0" max="1000"  :value="volumeLevel">
         </span>
         <!-- TIME/DURATION -->
@@ -50,6 +55,7 @@ export default Vue.extend({
       duration: "0:00",
       currentTime: "0:00",
       value: 0,
+      savedVolume:0,
       checked: false
     };
   },
@@ -78,6 +84,16 @@ export default Vue.extend({
     stop() {
       this.pause();
       this.audio.currentTime = 0;
+    },
+    mute(){
+      this.savedVolume=this.audio.volume;
+      (this.audio as HTMLAudioElement).volume=0;
+      this.$store.commit('setVolumeLevel',0);
+    },
+    unmute(){
+      (this.audio as HTMLAudioElement).volume=this.savedVolume;
+      this.$store.commit('setVolumeLevel',this.savedVolume);
+
     },
     noImage(e: any) {
       e.target.src = fallbackImage;
@@ -118,7 +134,6 @@ export default Vue.extend({
   },
   mounted() {
     this.audio.volume = this.$store.state.volumeLevel;
-    console.log(this.audio.volume);
     this.audio.onloadedmetadata = () =>
       (this.duration = formatSecondsAsTime(
         Math.floor(this.audio.duration).toString()
