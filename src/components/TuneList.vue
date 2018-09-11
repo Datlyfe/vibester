@@ -11,8 +11,8 @@
     </div>
 
     <!-- TABLE BODY -->
-    <virtual-list wclass="v-list" :size="35" :remain="15" :bench="0">
-      <div :class="{'selected':selected.includes(song.id)}" tabindex="-1" @contextmenu="showContextMenu(song.id)" @mousedown="selectSong($event,song.id,index)"  @dblclick="cue(song)" v-for="(song,index) in songs" class="row" :key="song.id">
+    <virtual-list wclass="v-list" :size="35" :remain="14" :bench="0">
+      <div  :class="{'selected':selected.includes(song.id),'songPlaying': songPlaying && songPlaying.id==song.id}" tabindex="-1" @contextmenu="showContextMenu" @mousedown="selectSong($event,song.id,index)"  @dblclick="cue(song)" v-for="(song,index) in songs" class="row" :key="song.id">
         <div class="cell title">{{song.title}}</div>
         <div class="cell artist">{{song.artist}}</div>
         <div class="cell album">{{song.album}}</div>
@@ -29,11 +29,16 @@
 import Vue from "vue";
 import bus from "@/services/bus";
 import { ISong } from "@/models/song";
-import electron from "electron";
-import { isCtrlKey } from "@/services/utils";
+import { remote } from "electron";
+import {
+  isCtrlKey,
+  getSelected,
+  isLeftClick,
+  isRightClick
+} from "@/services/utils";
 import VirtualList from "vue-virtual-scroll-list";
 import { IPlaylist } from "@/models/playlist";
-const { shell, remote } = electron;
+import { createTuneListContext } from "@/services/context";
 const { Menu } = remote;
 export default Vue.extend({
   props: ["songs"],
@@ -45,15 +50,17 @@ export default Vue.extend({
   components: {
     VirtualList
   },
+  computed:{
+    songPlaying(){
+      return this.$store.state.songPlaying;
+    }
+  },
   methods: {
     cue(song: ISong) {
-      this.$store.dispatch("PLAY_SONG", song);
+      this.$store.dispatch("PLAY_SONG", { song, isLocal: true });
     },
     selectSong(e, id, index) {
-      if (
-        this.isLeftClick(e) ||
-        (this.isRightClick(e) && this.isSelectableTrack(id))
-      ) {
+      if (isLeftClick(e) || (isRightClick(e) && this.isSelectableTrack(id))) {
         if (isCtrlKey(e)) {
           this.toggleSelectionById(id);
         } else if (e.shiftKey) {
@@ -67,60 +74,14 @@ export default Vue.extend({
         }
       }
     },
-    handleOutsideClick(e) {
-      if (this.$refs.table && !this.$refs.table.contains(e.target)) {
-        this.selected = [];
-      }
-    },
-    showContextMenu(songId) {
-      const selectedCount = this.selected.length;
-      const playlistSubMenu: electron.MenuItemConstructorOptions[] = [
-        {
-          label: "New Playlist",
-          click: () => {
-            this.$store.dispatch("NEW_PLAYLIST").then((p: IPlaylist) => {
-              this.$store.dispatch("ADD_TO_PLAYLIST", {
-                songsIds: this.selected,
-                playlistId: p.id
-              });
-            });
-          }
-        },
-        { type: "separator" }
-      ];
-      this.$store.state.playlists.forEach((p: IPlaylist) => {
-        playlistSubMenu.push({
-          label: p.name,
-          click: () =>
-            this.$store.dispatch("ADD_TO_PLAYLIST", {
-              songsIds: this.selected,
-              playlistId: p.id
-            })
-        });
-      });
-      const template: electron.MenuItemConstructorOptions[] = [
-        {
-          label:
-            selectedCount > 1
-              ? `${selectedCount} Tunes Selected`
-              : `${selectedCount} Tune Selected`,
-          enabled: false
-        },
-        {
-          label: "Add to playlist",
-          submenu: playlistSubMenu
-        }
-      ];
-
-      const context = Menu.buildFromTemplate(template);
+    showContextMenu() {
+      const context = Menu.buildFromTemplate(
+        createTuneListContext(this.selected)
+      );
       context.popup({});
-    },
-    isSelectableTrack(id: number) {
-      return !this.selected.includes(id);
     },
     toggleSelectionById(id: number) {
       let selected = [...this.selected];
-
       if (selected.includes(id)) {
         selected.splice(selected.indexOf(id), 1);
       } else {
@@ -129,36 +90,16 @@ export default Vue.extend({
       this.selected = selected;
     },
     multiSelect(index: number) {
-      const tracks = [...this.songs];
-      const selected = [...this.selected];
-      const selectedInt = [];
-      for (let i = 0; i < tracks.length; i++) {
-        if (selected.includes(tracks[i].id)) {
-          selectedInt.push(i);
-        }
-      }
-      let base;
-      const min = Math.min(...selectedInt);
-      const max = Math.max(...selectedInt);
-      if (index < min) {
-        base = max;
-      } else {
-        base = min;
-      }
-      const newSelected = [];
-      if (index < min) {
-        for (let i = 0; i <= Math.abs(index - base); i++) {
-          newSelected.push(tracks[base - i]._id);
-        }
-      } else if (index > max) {
-        for (let i = 0; i <= Math.abs(index - base); i++) {
-          newSelected.push(tracks[base + i]._id);
-        }
-      }
-      this.selected = newSelected;
+      this.selected = getSelected([...this.selected], [...this.songs], index);
     },
-    isLeftClick: e => e.button === 0,
-    isRightClick: e => e.button === 2
+    isSelectableTrack(id: number) {
+      return !this.selected.includes(id);
+    },
+    handleOutsideClick(e) {
+      if (this.$refs.table && !this.$refs.table.contains(e.target)) {
+        this.selected = [];
+      }
+    }
   },
   mounted() {
     document
@@ -169,7 +110,7 @@ export default Vue.extend({
     document.addEventListener("mousedown", this.handleOutsideClick);
   },
   destroyed() {
-    document.removeEventListener("mousedown", this.handleClickOutside);
+    document.removeEventListener("mousedown", this.handleOutsideClick);
   }
 });
 </script>

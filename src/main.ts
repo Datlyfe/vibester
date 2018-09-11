@@ -42,7 +42,7 @@ new Vue({
         store.state.playlists = playlists;
       });
 
-    ipcRenderer.on("setFolder", async (_, folder) => {
+    ipcRenderer.on("setFolder",(_, folder) => {
       if (store.state.folder == folder) {
         return;
       }

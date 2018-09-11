@@ -1,5 +1,5 @@
 <template>
-  <div class="playlists animated fadeIn">
+  <div class="playlists">
     <div class="p-side">
       <Header title="Playlists">
         <div class="actions" slot="actions">
@@ -9,16 +9,19 @@
       <ul class="p-list">
         <li  @dblclick="startEdit(p)" @contextmenu="openMenu(p)" :class="{'p-active':selectedPlaylist.id==p.id}" @click="goToPlaylist(p)" class="p-item" v-for="p in playlists" :key="p.id">
           <template v-if="write && p.id==selectedPlaylist.id">
-            <input maxlength="25" :value="p.name" class="p-input" @blur="cancelRename" @keypress.13="rename" autofocus  ref="pInput" type="text">
+            <input maxlength="20" :value="p.name" class="p-input" @blur="cancelRename" @keypress.13="rename" autofocus  ref="pInput" type="text">
             <div class="p-active-bar"></div>
           </template>
-          <template v-else>{{p.name}}</template>
+          <template v-else>
+            <span class="name">{{p.name}}</span>
+            <span class="total">{{p.songs.length}}</span>
+          </template>
 
         </li>
       </ul>
     </div>
     <div class="p-body">
-      <Playlist @rename="handleRenameEvent" @delete="handleDeleteEvent" :noPlaylist="noPlaylist" :key="selectedPlaylist.id" :p="selectedPlaylist"/>
+      <Playlist @rename="handleRenameEvent" @delete="handleDeleteEvent" :noPlaylist="noPlaylist" :key="selectedPlaylist.name+selectedPlaylist.id" :p="selectedPlaylist"/>
     </div>
   </div>
 </template>
@@ -35,7 +38,8 @@ import store from "@/store";
 export default Vue.extend({
   data() {
     return {
-      selectedPlaylist: { id: -1 } as IPlaylist,
+      defaultPlaylist: { id: -1, name: "", songs: [] },
+      selectedPlaylist: { id: -1, name: "", songs: [] } as IPlaylist,
       write: false
     };
   },
@@ -66,7 +70,7 @@ export default Vue.extend({
       const context = electron.remote.Menu.buildFromTemplate(template);
       context.popup({});
     },
-    startEdit(p:IPlaylist) {
+    startEdit(p: IPlaylist) {
       this.selectedPlaylist = p;
       this.write = true;
       // BIG HACK INCOMING
@@ -79,21 +83,21 @@ export default Vue.extend({
     cancelRename() {
       this.write = false;
     },
-    handleRenameEvent(p:IPlaylist){
+    handleRenameEvent(p: IPlaylist) {
       this.startEdit(p);
     },
-    handleDeleteEvent(p:IPlaylist){
-      this.delete(p.id)
+    handleDeleteEvent(p: IPlaylist) {
+      this.delete(p.id);
     },
-    delete(id){
-      this.$store.dispatch("DELETE_PLAYLIST",id).then(()=>{
-        this.selectedPlaylist=this.playlists[0] || {id:-1}
-      })
+    delete(id) {
+      this.$store.dispatch("DELETE_PLAYLIST", id).then(() => {
+        this.selectedPlaylist = this.playlists[this.playlists.length-1] || this.defaultPlaylist;
+      });
     },
     rename(e) {
       this.write = false;
       if (e.target.value == "") {
-        console.warn("empthy name not allowed");
+        console.warn("empty name not allowed");
         return;
       }
       this.$store.dispatch("RENAME_PLAYLIST", {
@@ -110,8 +114,7 @@ export default Vue.extend({
         this.selectedPlaylist = p;
       });
     }
-  },
-  mounted() {}
+  }
 });
 </script>
 
@@ -121,9 +124,9 @@ export default Vue.extend({
 .p-side {
   background: #2e2e2e;
   padding: 3rem 2rem;
-  width: 300px;
-  border-right: 1px solid #333333;
+  width: 320px;
   height: -webkit-fill-available;
+  // min-height: 100vh;
   overflow: auto;
   overflow-x: hidden;
   &::-webkit-scrollbar-track {

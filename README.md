@@ -13,7 +13,7 @@ Elegent music player powered by Electron and Vue
 If you wish you contribute to this project, this road map below should give you a fair idea on what i'm planning to implement next
 
 - ~~Playlists~~
-- Volume Control, Shuffle, loop
+- ~~Volume Control~~, Shuffle, loop
 - Drag and drop files
 - Most Played Tracks (monthly,weekly,daily)
 

@@ -2,7 +2,13 @@
   <div v-if="noPlaylist" class="empty animated fadeIn">
     <div class="msg">
       <i class="fa fa-info"></i>
-      <span>You Have No PLaylists</span>
+      <span>You Have 0 Playlists</span>
+    </div>
+  </div>
+  <div v-else-if="p.id==-1" class="empty animated fadeIn">
+     <div class="msg">
+        <i class="fa fa-info"></i>
+        <span>Select A Playlist</span>
     </div>
   </div>
   <div v-else>
@@ -18,15 +24,17 @@
       </template>
     </Header>
     <div v-if="!isEmpty" class="p-feed animated fadeIn">
-      <ul class="p-feed-list">
-        <li @click="cue(song)" class="p-song" v-for="(song,index) in p.songs" :key="song.id">
-          <span class="index">{{index+1}}</span>
-          <div class="p-song-info">
-            <span class="title">{{song.title}}</span>
-            <span class="artist">{{song.artist}}</span>          
+      <div ref="table" class="table">
+        <virtual-list wclass="v-list" :size="35" :remain="15" :bench="0">
+          <div @click="cue(song)" :class="{'songPlaying':songPlaying && songPlaying.id==song.id}" tabindex="-1" v-for="(song,index) in p.songs" class="row" :key="song.id">
+            <div style="width:5%" class="cell">{{index+1}}</div>
+            <div style="width:30%" class="cell">{{song.title}}</div>
+            <div style="width:30%" class="cell">{{song.artist}}</div>
+            <div style="width:10%" class="cell">{{song.duration}}</div>
+            <div style="width:25%" class="cell"></div>
           </div>
-        </li>
-      </ul>
+        </virtual-list>
+      </div>
     </div>
     <div v-else >
       <div class="empty">
@@ -47,23 +55,37 @@
 
 <script lang="ts">
 import Vue from "vue";
-import bus from "@/services/bus";
 import Header from "@/components/Header.vue";
-
-import { IPlaylist } from "@/models/playlist";
-import { ISong } from "@/models/song";
+import VirtualList from "vue-virtual-scroll-list";
 
 export default Vue.extend({
   props: ["p", "noPlaylist"],
   components: {
-    Header
+    Header,
+    VirtualList
   },
   data() {
     return {};
   },
+  computed: {
+    isEmpty() {
+      return this.p.songs && this.p.songs.length == 0;
+    },
+    songPlaying() {
+      return this.$store.state.songPlaying;
+    }
+  },
   methods: {
-    cue(song: ISong) {
-      this.$store.dispatch("PLAY_SONG", song);
+    openMenu(e: Event) {
+      e.stopPropagation();
+      console.log("log");
+    },
+    cue(song) {
+      this.$store.dispatch("PLAY_SONG", {
+        song,
+        isLocal: true,
+        inPlaylist: this.p.id
+      });
     },
     getBgImg(src) {
       return { backgroundImage: `url(${src})` };
@@ -72,11 +94,9 @@ export default Vue.extend({
       return `Reading From PLaylist : ${name}`;
     }
   },
-  computed: {
-    isEmpty() {
-      return this.p.songs && this.p.songs.length == 0;
-    }
-  },
-  mounted() {}
+  mounted() {
+    let table = document.getElementsByClassName("v-list")[0];
+    table && table.parentElement.classList.add("vv-list");
+  }
 });
 </script>

@@ -29,7 +29,7 @@ export default Vue.extend({
       return { backgroundImage: `url(${src})` };
     },
     cue(song: ISong) {
-      bus.$emit("newCue", song, false);
+      this.$store.dispatch("PLAY_SONG", { song, isLocal: false });
     },
     handleImageLoad(e) {
       e.target.parentNode.classList.remove("js-loading");

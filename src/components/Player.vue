@@ -1,5 +1,5 @@
 <template>
-  <div class="player">
+  <div  class="player">
     <!-- HIDDEN AUDIO TAG -->
     <audio autoplay crossorigin="anonymous" style="display:none" ref="audio" :src="song.src"></audio>
     <!-- CONTROLS -->
@@ -12,17 +12,28 @@
     <!-- SONG COVER -->
     <div :style="coverStyle" class="cover"></div>
 
-    <!-- SONG INFO -->
-    <div class="info">
+    <!-- PLAYER BODY -->
+    <div class="player-body">
       <div class="text">
+        <!-- TITLE -->
         <span class="title">{{song.title}} - </span>
+        <!-- ARTIST -->
         <span class="artist">{{song.artist}}</span>
+        <span style="flex:1"></span>
+        <!-- VOLUME -->
+        <span class="volume">
+          <i class="fa fa-volume-down"></i>
+          <input class="volume_range" @input="changeVolume" type="range"  step="10" title="volume" min="0" max="1000"  :value="volumeLevel">
+        </span>
+        <!-- TIME/DURATION -->
         <span v-if="isLocal" class="time">{{currentTime}} / {{duration}}</span>
         <span class="time" v-else>{{currentTime}} / 0:30</span>
       </div>
       <!-- PROGRESS BAR -->
       <progress class="progress-bar" @click="handleProgress" :value="value" max="1" ref="progress"></progress>
     </div>
+    <!-- REF LINKS -->
+    <div class="links"></div>
   </div>
 </template>
 
@@ -32,7 +43,7 @@ import Vue from "vue";
 import { shorten, formatSecondsAsTime } from "@/services/helpers";
 import fallbackImage from "@/assets/img/disk.jpg";
 export default Vue.extend({
-  props: ["song", "isLocal"],
+  props: ["song", "isLocal", "inPlaylist"],
   data() {
     return {
       playing: true,
@@ -48,6 +59,9 @@ export default Vue.extend({
     },
     coverStyle() {
       return { backgroundImage: `url(${this.song.cover})` };
+    },
+    volumeLevel(){
+      return this.$store.state.volumeLevel*1000;
     }
   },
   methods: {
@@ -73,18 +87,38 @@ export default Vue.extend({
       this.audio.currentTime = percent * this.audio.duration;
     },
     changeVolume(e: any) {
-      this.audio.volume = parseInt(e.target.value) / 1000;
+      let volumeLevel =parseInt(e.target.value) / 1000;
+      this.audio.volume=volumeLevel;
+      this.$store.commit('setVolumeLevel',volumeLevel);
     },
     next() {
       this.isLocal &&
-        this.$store.dispatch("PLAY_NEXT_SONG", { id: this.song.id });
+        this.$store.dispatch("PLAY_NEXT_SONG", {
+          id: this.song.id,
+          inPlaylist: this.inPlaylist
+        });
     },
     prev() {
       this.isLocal &&
-        this.$store.dispatch("PLAY_PREV_SONG", { id: this.song.id });
+        this.$store.dispatch("PLAY_PREV_SONG", {
+          id: this.song.id,
+          inPlaylist: this.inPlaylist
+        });
+    }
+  },
+  watch:{
+    'song':{
+      immediate:true,
+      handler(to,from){
+        if( from && to.id===from.id) return;
+        this.$store.commit('setPlaying',to);
+        this.playing=true;
+      }
     }
   },
   mounted() {
+    this.audio.volume = this.$store.state.volumeLevel;
+    console.log(this.audio.volume);
     this.audio.onloadedmetadata = () =>
       (this.duration = formatSecondsAsTime(
         Math.floor(this.audio.duration).toString()
@@ -102,10 +136,14 @@ export default Vue.extend({
       this.value = 0;
       this.currentTime = "0:00";
       this.playing = false;
-      if (this.isLocal) {
-        this.$store.dispatch("PLAY_NEXT_SONG", { id: this.song.id });
-      }
+      this.next();
     };
+    // CONFLICT : activated when renaming a playlist 
+    // document.addEventListener("keydown", e => {
+    //   if (e.keyCode == 32) {
+    //     this.playing ? this.pause() : this.play();
+    //   }
+    // });
   },
   beforeDestroy() {
     this.audio.remove();

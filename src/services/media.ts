@@ -7,7 +7,6 @@ import { ISong } from "@/models/song";
 
 export const stat = util.promisify(fs.stat);
 
-
 // CHECK IF FILE IS PLAYBALE
 export const isPlayableMedia = (filepath: string): boolean => {
   return ["m4a", "mp3"].includes(path.extname(filepath).substring(1));
@@ -80,7 +79,6 @@ export const parseUri = (uri: string): string => {
     .reduce((a, b) => path.join(a, b));
   return `file://${root}${location}`;
 };
-
 
 export const getDefaultMetadata = (): ISong => ({
   album: "Unknown",
@@ -168,7 +166,7 @@ export const parseMusicMetadata = (
     album: common.album,
     artist: common.artist,
     duration: parseDuration(format.duration),
-    genre: common.genre || ['-'], // not sure about this...
+    genre: common.genre || ["-"], // not sure about this...
     year: common.year
   };
   return metadata;

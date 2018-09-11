@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-    <Player v-if="song.id" :key="song.id" :song="song" :isLocal="isLocal"/>
+    <Player v-if="song.id" :song="song" :isLocal="isLocal" :inPlaylist="inPlaylist"/>
   </div>
 </template>
 
@@ -10,27 +10,28 @@ import Player from "@/components/Player.vue";
 import { ISong } from "@/models/song";
 import bus from "@/services/bus";
 import * as media from "@/services/media";
-import {parseSong} from "@/services/utils";
-
+import { parseSong } from "@/services/utils";
 
 export default Vue.extend({
   data() {
     return {
       song: {} as ISong,
-      isLocal: false
+      isLocal: false,
+      inPlaylist: false
     };
   },
   components: {
     Player
   },
   mounted() {
-    bus.$on("newCue", async (song: any, isLocal: boolean) => {
+    bus.$on("newCue", async ({ song, isLocal, inPlaylist }) => {
+      this.inPlaylist = inPlaylist || false;
       this.isLocal = isLocal;
       if (isLocal) {
         let cover = await media.fetchCover(song.path);
         this.song = { ...song, cover, src: media.parseUri(song.path) };
       } else {
-        this.song=parseSong(song);
+        this.song = parseSong(song);
       }
     });
   }

@@ -53,6 +53,14 @@
     color: white !important;
   }
 }
+.songPlaying{
+  .cell{
+    color: white !important;
+  }
+  &:hover{
+    color: white !important
+  }
+}
 .row.header:hover {
   background-color: unset;
   cursor: unset;

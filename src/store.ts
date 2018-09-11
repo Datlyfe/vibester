@@ -16,11 +16,20 @@ export default new Vuex.Store({
     playlists: [] as IPlaylist[],
     loading: false as boolean,
     localSongsQueue: [] as ISong[],
-    songsFilter: "" as string
+    songsFilter: "" as string,
+    songPlaying: null as ISong,
+    volumeLevel: localStorage.getItem('volumeLevel') || 0.5
   },
   mutations: {
     songsFilter(state, term: string) {
       state.songsFilter = term;
+    },
+    setPlaying(state, song) {
+      state.songPlaying = song;
+    },
+    setVolumeLevel(state, level) {
+      state.volumeLevel = level;
+      localStorage.setItem('volumeLevel',level);
     }
   },
   actions: {
@@ -47,26 +56,45 @@ export default new Vuex.Store({
         state.localSongsQueue.push(song);
       }
     },
-    PLAY_SONG(_, song) {
-      bus.$emit("newCue", song, true);
+    PLAY_SONG(_, { song, isLocal, inPlaylist }) {
+      bus.$emit("newCue", { song, isLocal, inPlaylist });
     },
-    PLAY_NEXT_SONG({ state, dispatch }, { id }) {
-      let index = state.localSongs.findIndex(song => song.id == id);
-      let size = state.localSongs.length;
+    PLAY_NEXT_SONG({ state, dispatch }, { id, inPlaylist }) {
+      const source = inPlaylist
+        ? state.playlists.filter(p => p.id == inPlaylist)[0].songs
+        : state.localSongs;
+      const index = source.findIndex(song => song.id == id);
+      const size = source.length;
       if (size > 0 && index == size - 1) {
-        dispatch("PLAY_SONG", state.localSongs[0]);
+        dispatch("PLAY_SONG", { song: source[0], isLocal: true, inPlaylist });
       } else {
-        dispatch("PLAY_SONG", state.localSongs[index + 1]);
+        dispatch("PLAY_SONG", {
+          song: source[index + 1],
+          isLocal: true,
+          inPlaylist
+        });
       }
     },
-    PLAY_PREV_SONG({ state, dispatch }, { id }) {
-      let index = state.localSongs.findIndex(song => song.id == id);
-      let size = state.localSongs.length;
+    PLAY_PREV_SONG({ state, dispatch }, { id, inPlaylist }) {
+      const source = inPlaylist
+        ? state.playlists.filter(p => p.id == inPlaylist)[0].songs
+        : state.localSongs;
+
+      const index = source.findIndex(song => song.id == id);
+      const size = source.length;
 
       if (size > 0 && index == 0) {
-        dispatch("PLAY_SONG", state.localSongs[size - 1]);
+        dispatch("PLAY_SONG", {
+          song: source[size - 1],
+          isLocal: true,
+          inPlaylist
+        });
       } else {
-        dispatch("PLAY_SONG", state.localSongs[index - 1]);
+        dispatch("PLAY_SONG", {
+          song: source[index - 1],
+          isLocal: true,
+          inPlaylist
+        });
       }
     },
     async NEW_PLAYLIST({ state }) {
