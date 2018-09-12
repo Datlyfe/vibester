@@ -9,12 +9,8 @@
       </div>
       <!-- ACTIONS -->
       <template slot="actions">
-        <h4 style="cursor:pointer" @click="setFolder" class="header__label small">
-          <i class="fa fa-folder"></i> Pick Folder
-        </h4>
-         <h4 class="header__label small">
-           {{songs.length}} Total
-        </h4>
+        <h4 style="cursor:pointer" @click="setFolder" class="header__label small"><i class="fa fa-folder"></i>Pick Folder</h4>
+         <h4 class="header__label small">{{songs.length}} Total</h4>
       </template>
     </Header>
     <!-- LOADER -->

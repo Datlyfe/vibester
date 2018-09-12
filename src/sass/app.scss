@@ -78,7 +78,7 @@ body {
 }
 
 .p-list {
-  margin: 2.5rem 0;
+  margin: 2rem 0;
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -88,14 +88,12 @@ body {
 .p-item {
   position: relative;
   width: 100%;
-  transition: color 0.1s;
   cursor: pointer;
   width: 100%;
-  font-weight: 700;
-  font-size: 1.9rem;
-  padding: 0.75rem 0;
+  font-size: 1.6rem;
+  padding: 0.5rem 0;
   color: darkgray;
-  margin: 0.5rem 0;
+  margin-bottom: 0.5rem;
   .total {
     position: absolute;
     right: 0;
@@ -124,7 +122,7 @@ body {
   position: relative;
   color: #f5f5f5;
   font-weight: 700;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
 }
 .p-active {
   color: ghostwhite;
@@ -253,6 +251,60 @@ body {
 
   to {
     transform: scale3d(1, 0, 1);
+  }
+}
+
+@-webkit-keyframes wiggle {
+  0% {
+    -webkit-transform: rotate(10deg);
+  }
+  25% {
+    -webkit-transform: rotate(-10deg);
+  }
+  50% {
+    -webkit-transform: rotate(20deg);
+  }
+  75% {
+    -webkit-transform: rotate(-5deg);
+  }
+  100% {
+    -webkit-transform: rotate(0deg);
+  }
+}
+
+@-ms-keyframes wiggle {
+  0% {
+    -ms-transform: rotate(1deg);
+  }
+  25% {
+    -ms-transform: rotate(-1deg);
+  }
+  50% {
+    -ms-transform: rotate(1.5deg);
+  }
+  75% {
+    -ms-transform: rotate(-5deg);
+  }
+  100% {
+    -ms-transform: rotate(0deg);
+  }
+}
+
+@keyframes wiggle {
+  0% {
+    transform: rotate(10deg);
+  }
+  25% {
+    transform: rotate(-10deg);
+  }
+  50% {
+    transform: rotate(20deg);
+  }
+  75% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0deg);
   }
 }
 

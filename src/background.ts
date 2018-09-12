@@ -23,11 +23,10 @@ function createMainWindow() {
     // width:1705,
     minWidth: 1500,
     minHeight: 780,
-    resizable:true,
+    resizable: true,
     icon: path.join(__static, "logo.png"),
     webPreferences: { webSecurity: false }
   });
-
 
   if (isDevelopment) {
     // Load the url of the dev server if in development mode

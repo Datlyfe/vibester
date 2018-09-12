@@ -61,14 +61,44 @@ export default Vue.extend({
   }
   .actions {
     margin-left: auto;
+    display: flex;
+    align-items: center;
     .fa-plus {
-      transition: all 0.3s;
       color: darkgray;
       cursor: pointer;
       font-weight: 300;
-      font-size: 2rem;
+      font-size: 1rem;
+      border: 1px solid;
       position: relative;
-      right: -2px;
+      right: -4px;
+      padding: 0.6rem 0.7rem;
+      &:hover {
+        color: ghostwhite;
+      }
+    }
+    .delete {
+      cursor: pointer;
+      text-transform: capitalize;
+      font-size: 1.6rem;
+      margin: 0 .5rem;
+      color: darkgray;
+      .fa {
+        margin: 0 0.5rem;
+      }
+      &:hover {
+        color: ghostwhite;
+      }
+    }
+
+    .rename {
+      cursor: pointer;
+      text-transform: capitalize;
+      font-size: 1.6rem;
+      margin: 0 .5rem;
+      color: darkgray;
+      .fa {
+        margin: 0 0.5rem;
+      }
       &:hover {
         color: ghostwhite;
       }

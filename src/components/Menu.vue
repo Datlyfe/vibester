@@ -25,8 +25,8 @@ export default Vue.extend({
   data() {
     return {
       items: [
-        { name: "Discover", to: "/", icon: "fa fa-compass" },
-        { name: "Library", to: "/files", icon: "fa fa-folder-open" },
+        { name: "Library", to: "/", icon: "fa fa-folder-open" },
+        { name: "Discover", to: "/discover", icon: "fa fa-compass" },
         { name: "playlists", to: "/playlists", icon: "fa fa-list-ul" },
         { name: "Most Played", to: "/most-played", icon: "fa fa-bolt" },
         { name: "Settings", to: "/settings", icon: "fa fa-gear" }

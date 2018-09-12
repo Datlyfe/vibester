@@ -49,13 +49,14 @@
 .row:hover {
   cursor: pointer;
   .cell {
-    color: white !important;
+    color: ghostwhite !important;
   }
 }
 .row.selected {
-  background-color: var(--primary);
+  border-radius: 6px;
+  background-color: rgba(#7e2236,.8);
   .cell {
-    color: white !important;
+    color: ghostwhite !important;
   }
 }
 .row.selected {
@@ -68,10 +69,10 @@
 }
 .songPlaying {
   .cell {
-    color: white !important;
+    color: ghostwhite !important;
   }
   &:hover {
-    color: white !important;
+    color: ghostwhite !important;
   }
 }
 .row.header:hover {

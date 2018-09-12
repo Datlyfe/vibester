@@ -9,7 +9,7 @@
       <ul class="p-list">
         <li  @dblclick="startEdit(p)" @contextmenu="openMenu(p)" :class="{'p-active':selectedPlaylist.id==p.id}" @click="goToPlaylist(p)" class="p-item" v-for="p in playlists" :key="p.id">
           <template v-if="write && p.id==selectedPlaylist.id">
-            <input maxlength="20" :value="p.name" class="p-input" @blur="cancelRename" @keypress.13="rename" autofocus  ref="pInput" type="text">
+            <input maxlength="23" :value="p.name" class="p-input" @blur="cancelRename" @keypress.13="rename" autofocus  ref="pInput" type="text">
             <div class="p-active-bar"></div>
           </template>
           <template v-else>
@@ -71,7 +71,7 @@ export default Vue.extend({
       context.popup({});
     },
     startEdit(p: IPlaylist) {
-      if(this.write) return;
+      if (this.write) return;
       this.selectedPlaylist = p;
       this.write = true;
       // BIG HACK INCOMING
@@ -92,7 +92,8 @@ export default Vue.extend({
     },
     delete(id) {
       this.$store.dispatch("DELETE_PLAYLIST", id).then(() => {
-        this.selectedPlaylist = this.playlists[this.playlists.length-1] || this.defaultPlaylist;
+        this.selectedPlaylist =
+          this.playlists[this.playlists.length - 1] || this.defaultPlaylist;
       });
     },
     rename(e) {
@@ -125,7 +126,7 @@ export default Vue.extend({
 .p-side {
   background: #2e2e2e;
   padding: 3rem 2rem;
-  width: 320px;
+  width: 260px;
   height: -webkit-fill-available;
   // min-height: 100vh;
   overflow: auto;

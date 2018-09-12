@@ -10,12 +10,12 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
-      path: "/",
-      name: "home",
+      path: "/discover",
+      name: "discover",
       component: loadView("Discover")
     },
     {
-      path: "/files",
+      path: "/",
       name: "files",
       component: loadView("Files")
     },

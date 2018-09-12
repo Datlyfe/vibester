@@ -1,34 +1,28 @@
 <template>
-  <div ref="table" class="table">
+  <Message v-if=" allSongs.length==0" msg="Your Library is Empty :(" />
+  <Message v-else-if="songs.length==0 && allSongs.length>0" msg="Your Search Has No Results :(" />
+  <!-- TABLE -->
+  <div v-else ref="table" class="table">
     <!-- TABLE HEADER -->
-    <div v-if="songs.length>0" class="row header">
+    <div  class="row header">
       <div class="cell title">Title</div>
       <div class="cell artist">Artist</div>
       <div class="cell album">Album</div>
       <div class="cell duration">Duration</div>
-
     </div>
-
     <!-- TABLE BODY -->
-    <virtual-list wclass="v-list" :size="35" :remain="14" :bench="0">
+    <virtual-list class="vv-list" wclass="v-list" :size="35" :remain="14" :bench="0">
       <div  :class="{'selected':selected.includes(song.id),'songPlaying': songPlaying && songPlaying.id==song.id}" tabindex="-1" @contextmenu="showContextMenu" @mousedown="selectSong($event,song.id,index)"  @dblclick="cue(song)" v-for="(song,index) in songs" class="row" :key="song.id">
         <div class="cell title">{{song.title}}</div>
         <div class="cell artist">{{song.artist}}</div>
         <div class="cell album">{{song.album}}</div>
         <div class="cell duration">{{song.duration}}</div>
         <div style="width:15%" class="cell indicator">
-          <div v-show="songPlaying && songPlaying.id==song.id" class="playing-indicator">
-            <div class="animation">
-              <div class="bar bar-first"></div>
-              <div class="bar bar-second"></div>
-              <div class="bar bar-third"></div>
-            </div>
-          </div>
+         <!-- SOME ANIMATED INDICATOR SHOULD BE HERE -->
         </div>
       </div>
     </virtual-list>
-
-</div>
+  </div>
 </template>
 
 
@@ -44,6 +38,7 @@ import {
   isRightClick
 } from "@/services/utils";
 import VirtualList from "vue-virtual-scroll-list";
+import Message from "@/components/Message.vue";
 import { IPlaylist } from "@/models/playlist";
 import { createTuneListContext } from "@/services/context";
 const { Menu } = remote;
@@ -55,11 +50,15 @@ export default Vue.extend({
     };
   },
   components: {
-    VirtualList
+    VirtualList,
+    Message
   },
-  computed:{
-    songPlaying(){
+  computed: {
+    songPlaying() {
       return this.$store.state.songPlaying;
+    },
+    allSongs() {
+      return this.$store.state.localSongs;
     }
   },
   methods: {
@@ -108,11 +107,7 @@ export default Vue.extend({
       }
     }
   },
-  mounted() {
-    document
-      .getElementsByClassName("v-list")[0]
-      .parentElement.classList.add("vv-list");
-  },
+  mounted() {},
   created() {
     document.addEventListener("mousedown", this.handleOutsideClick);
   },
