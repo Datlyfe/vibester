@@ -22,7 +22,7 @@ function createMainWindow() {
   const window = new BrowserWindow({
     // width:1705,
     minWidth: 1500,
-    minHeight: 780,
+    minHeight: 840,
     resizable: true,
     icon: path.join(__static, "logo.png"),
     webPreferences: { webSecurity: false }

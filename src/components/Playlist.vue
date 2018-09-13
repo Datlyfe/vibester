@@ -7,7 +7,7 @@
     </Header>
     <div v-if="!isEmpty" class="p-feed animated fadeIn">
       <div ref="table" class="table">
-        <virtual-list class="vv-list" wclass="v-list" :size="35" :remain="15" :bench="0">
+        <virtual-list class="vv-list" wclass="v-list" :size="35" :remain="17" :bench="0">
           <div @contextmenu="openContextMenu(song.id)" @click="cue(song)" :class="{'songPlaying':songPlaying && songPlaying.id==song.id}" v-for="(song,index) in p.songs" class="row" :key="song.id">
             <div style="width:5%" class="cell">{{index+1}}</div>
             <div style="width:30%" class="cell">{{song.title}}</div>

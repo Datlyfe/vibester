@@ -11,7 +11,7 @@
       <div class="cell duration">Duration</div>
     </div>
     <!-- TABLE BODY -->
-    <virtual-list class="vv-list" wclass="v-list" :size="35" :remain="14" :bench="0">
+    <virtual-list class="vv-list" wclass="v-list" :size="35" :remain="16" :bench="0">
       <div  :class="{'selected':selected.includes(song.id),'songPlaying': songPlaying && songPlaying.id==song.id}" tabindex="-1" @contextmenu="showContextMenu" @mousedown="selectSong($event,song.id,index)"  @dblclick="cue(song)" v-for="(song,index) in songs" class="row" :key="song.id">
         <div class="cell title">{{song.title}}</div>
         <div class="cell artist">{{song.artist}}</div>
