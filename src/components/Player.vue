@@ -24,17 +24,18 @@
         <svgicon @click="handleLoop(false)" v-else class="loop1" icon="repeatone" width="25" height="25" color="#fff"></svgicon>
         <!-- SHUFFLE -->
         <svgicon v-if="isLocal" @click="handleShuffle" :class="{'active-shuffle':shuffle}" class="shuffle" icon="shuffle" width="25" height="25" color="#fff"></svgicon>
-        <span style="flex:1"></span>
         <!-- VOLUME -->
-        <!-- <span class="volume">
+        <span class="volume">
           <i @click="unmute" v-if="volumeLevel==0" class="fa fa-volume-off"></i>
           <template v-else >
             <i @click="mute" v-if="volumeLevel<500" class="fa fa-volume-down"></i>
             <i @click="mute" v-else class="fa fa-volume-up"></i>
           </template>
 
-          <input class="volume_range" @input="changeVolume" type="range"  step="10" title="volume" min="0" max="1000"  :value="volumeLevel">
-        </span> -->
+          <input class="volume_range animated fadeIn" @input="changeVolume" type="range"  step="10" title="volume" min="0" max="1000"  :value="volumeLevel">
+        </span>
+        <!-- SEPERATOR -->
+        <span style="flex:1"></span>
         <!-- TIME/DURATION -->
         <span v-if="isLocal" class="time">{{currentTime}} / {{duration}}</span>
         <span class="time" v-else>{{currentTime}} / 0:30</span>
@@ -53,6 +54,8 @@ import Vue from "vue";
 import { shorten, formatSecondsAsTime } from "@/services/helpers";
 import fallbackImage from "@/assets/img/disk.jpg";
 import "@/compiled-icons";
+import { ISong } from "@/models/song";
+// import { Notification } from 'electron';
 export default Vue.extend({
   props: ["song", "isLocal", "inPlaylist"],
   data() {
@@ -91,8 +94,8 @@ export default Vue.extend({
       this.playing = true;
       this.audio.play();
     },
-    rePlay(){
-      this.audio.currentTime=0;
+    rePlay() {
+      this.audio.currentTime = 0;
       this.play();
     },
     pause() {
@@ -150,10 +153,16 @@ export default Vue.extend({
   watch: {
     song: {
       immediate: true,
-      handler(to, from) {
+      handler(to: ISong, from) {
         if (from && to.id === from.id) return;
         this.$store.commit("setPlaying", to);
         this.playing = true;
+
+        this.$store.dispatch("NEW_SONG_NOTIF", {
+          cover: to.cover,
+          title: to.title,
+          artist: to.artist
+        });
       }
     }
   },

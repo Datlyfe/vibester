@@ -9,10 +9,14 @@ import db from "@/db";
 import { ISong } from "@/models/song";
 import { IPlaylist } from "@/models/playlist";
 import * as media from "@/services/media";
-import VueSVGIcon from 'vue-svgicon'
+import VueSVGIcon from "vue-svgicon";
 import * as resources from "./resources";
+import VueIziToast from "vue-izitoast";
+import "izitoast/dist/css/iziToast.min.css";
 
-Vue.use(VueSVGIcon)
+Vue.use(VueIziToast);
+console.log(VueIziToast)
+Vue.use(VueSVGIcon);
 Vue.use(AsyncComputed);
 Vue.config.productionTip = false;
 Vue.use(Resource, {
@@ -44,7 +48,7 @@ new Vue({
         store.state.playlists = playlists;
       });
 
-    ipcRenderer.on("setFolder",(_, folder) => {
+    ipcRenderer.on("setFolder", (_, folder) => {
       if (store.state.folder == folder) {
         return;
       }

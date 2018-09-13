@@ -19,7 +19,7 @@
     margin: 0;
     font-size: 2rem !important;
   }
-  .deactivate{
+  .deactivate {
     color: darkgray !important;
     cursor: unset;
   }
@@ -61,20 +61,38 @@
   color: silver;
 }
 .volume {
-  margin: 0 1rem;
+  min-width: 40px;
+  margin-left: 2rem;  
   display: flex;
   align-items: center;
+  position: relative;
+  top: 1px;
   .fa {
+    cursor: pointer;
     font-size: 2.2rem;
-    margin: 0 1rem;
     width: 20px;
+    color: darkgray;
+  }
+
+  &:hover{
+    .fa{
+      color: white !important;
+    }
+    input{
+      display: block !important;
+    }
   }
 }
 
+
 .volume input[type="range"] {
+  display: none;
   width: 88px;
   height: 20px;
   background-color: transparent;
+  position: relative;
+  top: 1px;
+  animation-duration: .3s;
 }
 input[type="range"] {
   -webkit-appearance: none;
@@ -127,28 +145,30 @@ input[type="range"] {
   background-color: rgb(148, 28, 52);
 }
 
-.loop,.shuffle,.loop1{
+.loop,
+.shuffle,
+.loop1 {
   position: relative;
   top: 2px;
   cursor: pointer;
-  margin-left: 2rem ;
-  path{
-    fill: darkgray 
+  margin-left: 2rem;
+  path {
+    fill: darkgray;
   }
-  &:hover{
-    path{
-      fill: white 
+  &:hover {
+    path {
+      fill: white;
     }
   }
 }
-.loop1{
-  path{
-    fill:#db1d40 !important; 
+.loop1 {
+  path {
+    fill: #db1d40 !important;
   }
 }
 
-.active-shuffle{
-  path{
-    fill: #db1d40 !important; 
+.active-shuffle {
+  path {
+    fill: #db1d40 !important;
   }
 }

@@ -14,9 +14,9 @@
       </template>
     </Header>
     <!-- LOADER -->
-    <div v-if="loading" class="loader"></div>
+    <!-- <div v-if="loading" class="loader"></div> -->
     <!-- TUNE LIST -->
-    <TuneList v-show="!loading"  :songs="songs"/>
+    <TuneList :songs="songs"/>
   </div>
 </template>
 

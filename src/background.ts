@@ -1,6 +1,6 @@
 "use strict";
 
-import { app, protocol, BrowserWindow, ipcMain, dialog } from "electron";
+import { app, protocol, BrowserWindow, ipcMain, dialog, Notification } from "electron";
 import * as path from "path";
 import { format as formatUrl } from "url";
 import {

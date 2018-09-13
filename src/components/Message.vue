@@ -1,7 +1,6 @@
 <template>
   <div class="empty animated fadeIn">
     <div class="msg">
-      <i class="fa fa-info"></i>
       <span>{{msg}}</span>
       <slot></slot>
     </div>

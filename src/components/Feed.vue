@@ -1,5 +1,6 @@
 <template>
-  <ul class="songs_list">
+  <Message v-if="songs.length==0" msg="Search Came Up Empty" />
+  <ul v-else class="songs_list">
     <li @click="cue(song)" class="song" v-for="song in songs" :key="song.id">
       <div class="placeholder js-loading">
       <!-- <div class="placeholder js-loading"> -->
@@ -19,10 +20,15 @@
 import Vue from "vue";
 import bus from "@/services/bus";
 import { shorten } from "@/services/helpers";
+import Message from "@/components/Message.vue";
+
 
 import { ISong } from "@/models/song";
 export default Vue.extend({
   props: ["songs"],
+  components:{
+    Message
+  },
   methods: {
     shorten,
     getBgImg(src: string) {
