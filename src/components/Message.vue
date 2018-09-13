@@ -3,6 +3,7 @@
     <div class="msg">
       <i class="fa fa-info"></i>
       <span>{{msg}}</span>
+      <slot></slot>
     </div>
   </div>
 </template>

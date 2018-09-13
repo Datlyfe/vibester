@@ -19,6 +19,10 @@
     margin: 0;
     font-size: 2rem !important;
   }
+  .deactivate{
+    color: darkgray !important;
+    cursor: unset;
+  }
 }
 
 .cover {
@@ -121,4 +125,30 @@ input[type="range"] {
 
 .progress-bar::-webkit-progress-value {
   background-color: rgb(148, 28, 52);
+}
+
+.loop,.shuffle,.loop1{
+  position: relative;
+  top: 2px;
+  cursor: pointer;
+  margin-left: 2rem ;
+  path{
+    fill: darkgray 
+  }
+  &:hover{
+    path{
+      fill: white 
+    }
+  }
+}
+.loop1{
+  path{
+    fill:#db1d40 !important; 
+  }
+}
+
+.active-shuffle{
+  path{
+    fill: #db1d40 !important; 
+  }
 }

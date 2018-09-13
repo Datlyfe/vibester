@@ -13,9 +13,10 @@ Elegent music player powered by Electron and Vue
 If you wish you contribute to this project, this road map below should give you a fair idea on what i'm planning to implement next
 
 - ~~Playlists~~
-- ~~Volume Control~~, Shuffle, loop
-- Drag and drop files
+- ~~Volume Control, Shuffle, loop~~
 - Most Played Tracks (monthly,weekly,daily)
+- Minimize to tray
+- Drag and drop files
 
 
 This is what i have in mind at the moment but any ideas or suggestions are very welcome.

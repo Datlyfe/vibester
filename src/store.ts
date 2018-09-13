@@ -6,6 +6,8 @@ import bus from "@/services/bus";
 
 import { ISong } from "@/models/song";
 import { IPlaylist } from "@/models/playlist";
+import { getPlaylistById } from "@/services/operations";
+import { stat } from "fs";
 
 Vue.use(Vuex);
 
@@ -18,7 +20,7 @@ export default new Vuex.Store({
     localSongsQueue: [] as ISong[],
     songsFilter: "" as string,
     songPlaying: null as ISong,
-    volumeLevel: localStorage.getItem('volumeLevel') || 0.5
+    volumeLevel: localStorage.getItem("volumeLevel") || 0.5
   },
   mutations: {
     songsFilter(state, term: string) {
@@ -29,7 +31,7 @@ export default new Vuex.Store({
     },
     setVolumeLevel(state, level) {
       state.volumeLevel = level;
-      localStorage.setItem('volumeLevel',level);
+      localStorage.setItem("volumeLevel", level);
     }
   },
   actions: {
@@ -97,6 +99,17 @@ export default new Vuex.Store({
         });
       }
     },
+    PLAY_RANDOM_SONG({ state, dispatch }, { inPlaylist }) {
+      const source = inPlaylist
+        ? state.playlists.filter(p => p.id == inPlaylist)[0].songs
+        : state.localSongs;
+      const size = source.length;
+      dispatch("PLAY_SONG", {
+        song: source[Math.floor(Math.random() * (size-1))],
+        isLocal: true,
+        inPlaylist
+      });
+    },
     async NEW_PLAYLIST({ state }) {
       let p: IPlaylist = { name: "New Playlist", songs: [] };
       p.id = await db.table("playlists").add(p);
@@ -123,6 +136,14 @@ export default new Vuex.Store({
         p.songs.push(song);
       }
       db.table("playlists").update(p.id, { songs: p.songs });
+    },
+    async REMOVE_SONG_FROM_PLAYLIST({ state }, { songId, playlistId }) {
+      let pIndex = state.playlists.findIndex(p => p.id == playlistId);
+      let sIndex = state.playlists[pIndex].songs.findIndex(s => s.id == songId);
+      state.playlists[pIndex].songs.splice(sIndex, 1);
+      await db
+        .table("playlists")
+        .update(playlistId, { songs: state.playlists[pIndex].songs });
     }
   }
 });

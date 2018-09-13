@@ -4,10 +4,10 @@
     <audio autoplay crossorigin="anonymous" style="display:none" ref="audio" :src="song.src"></audio>
     <!-- CONTROLS -->
     <div class="controls">
-      <i @click="prev" class="fa fa-backward"></i>
+      <i :class="{'deactivate':!isLocal}" @click="prev" class="fa fa-backward"></i>
       <i @click="play" v-if="!playing" class="fa fa-play"></i>
       <i @click="pause" v-if="playing" class="fa fa-pause"></i>
-      <i @click="next" class="fa fa-forward"></i>
+      <i :class="{'deactivate':!isLocal}" @click="next" class="fa fa-forward"></i>
     </div>
     <!-- SONG COVER -->
     <div :style="coverStyle" class="cover"></div>
@@ -19,9 +19,14 @@
         <span class="title">{{song.title}} - </span>
         <!-- ARTIST -->
         <span class="artist">{{song.artist}}</span>
+        <!-- LOOP -->
+        <svgicon @click="handleLoop(true)" v-if="!loop" class="loop" icon="repeat" width="25" height="25" color="#fff"></svgicon>
+        <svgicon @click="handleLoop(false)" v-else class="loop1" icon="repeatone" width="25" height="25" color="#fff"></svgicon>
+        <!-- SHUFFLE -->
+        <svgicon v-if="isLocal" @click="handleShuffle" :class="{'active-shuffle':shuffle}" class="shuffle" icon="shuffle" width="25" height="25" color="#fff"></svgicon>
         <span style="flex:1"></span>
         <!-- VOLUME -->
-        <span class="volume">
+        <!-- <span class="volume">
           <i @click="unmute" v-if="volumeLevel==0" class="fa fa-volume-off"></i>
           <template v-else >
             <i @click="mute" v-if="volumeLevel<500" class="fa fa-volume-down"></i>
@@ -29,7 +34,7 @@
           </template>
 
           <input class="volume_range" @input="changeVolume" type="range"  step="10" title="volume" min="0" max="1000"  :value="volumeLevel">
-        </span>
+        </span> -->
         <!-- TIME/DURATION -->
         <span v-if="isLocal" class="time">{{currentTime}} / {{duration}}</span>
         <span class="time" v-else>{{currentTime}} / 0:30</span>
@@ -47,6 +52,7 @@
 import Vue from "vue";
 import { shorten, formatSecondsAsTime } from "@/services/helpers";
 import fallbackImage from "@/assets/img/disk.jpg";
+import "@/compiled-icons";
 export default Vue.extend({
   props: ["song", "isLocal", "inPlaylist"],
   data() {
@@ -55,8 +61,10 @@ export default Vue.extend({
       duration: "0:00",
       currentTime: "0:00",
       value: 0,
-      savedVolume:0,
-      checked: false
+      savedVolume: 0,
+      checked: false,
+      loop: false,
+      shuffle: false
     };
   },
   computed: {
@@ -66,16 +74,26 @@ export default Vue.extend({
     coverStyle() {
       return { backgroundImage: `url(${this.song.cover})` };
     },
-    volumeLevel(){
-      return this.$store.state.volumeLevel*1000;
+    volumeLevel() {
+      return this.$store.state.volumeLevel * 1000;
     }
   },
   methods: {
     formatSecondsAsTime,
     shorten,
+    handleLoop(loop) {
+      this.loop = loop;
+    },
+    handleShuffle() {
+      this.shuffle = !this.shuffle;
+    },
     play() {
       this.playing = true;
       this.audio.play();
+    },
+    rePlay(){
+      this.audio.currentTime=0;
+      this.play();
     },
     pause() {
       this.audio.pause();
@@ -85,15 +103,14 @@ export default Vue.extend({
       this.pause();
       this.audio.currentTime = 0;
     },
-    mute(){
-      this.savedVolume=this.audio.volume;
-      (this.audio as HTMLAudioElement).volume=0;
-      this.$store.commit('setVolumeLevel',0);
+    mute() {
+      this.savedVolume = this.audio.volume;
+      (this.audio as HTMLAudioElement).volume = 0;
+      this.$store.commit("setVolumeLevel", 0);
     },
-    unmute(){
-      (this.audio as HTMLAudioElement).volume=this.savedVolume;
-      this.$store.commit('setVolumeLevel',this.savedVolume);
-
+    unmute() {
+      (this.audio as HTMLAudioElement).volume = this.savedVolume;
+      this.$store.commit("setVolumeLevel", this.savedVolume);
     },
     noImage(e: any) {
       e.target.src = fallbackImage;
@@ -103,32 +120,40 @@ export default Vue.extend({
       this.audio.currentTime = percent * this.audio.duration;
     },
     changeVolume(e: any) {
-      let volumeLevel =parseInt(e.target.value) / 1000;
-      this.audio.volume=volumeLevel;
-      this.$store.commit('setVolumeLevel',volumeLevel);
+      let volumeLevel = parseInt(e.target.value) / 1000;
+      this.audio.volume = volumeLevel;
+      this.$store.commit("setVolumeLevel", volumeLevel);
     },
     next() {
       this.isLocal &&
-        this.$store.dispatch("PLAY_NEXT_SONG", {
-          id: this.song.id,
-          inPlaylist: this.inPlaylist
-        });
+        (!this.shuffle
+          ? this.$store.dispatch("PLAY_NEXT_SONG", {
+              id: this.song.id,
+              inPlaylist: this.inPlaylist
+            })
+          : this.$store.dispatch("PLAY_RANDOM_SONG", {
+              inPlaylist: this.inPlaylist
+            }));
     },
     prev() {
       this.isLocal &&
-        this.$store.dispatch("PLAY_PREV_SONG", {
-          id: this.song.id,
-          inPlaylist: this.inPlaylist
-        });
+        (!this.shuffle
+          ? this.$store.dispatch("PLAY_PREV_SONG", {
+              id: this.song.id,
+              inPlaylist: this.inPlaylist
+            })
+          : this.$store.dispatch("PLAY_RANDOM_SONG", {
+              inPlaylist: this.inPlaylist
+            }));
     }
   },
-  watch:{
-    'song':{
-      immediate:true,
-      handler(to,from){
-        if( from && to.id===from.id) return;
-        this.$store.commit('setPlaying',to);
-        this.playing=true;
+  watch: {
+    song: {
+      immediate: true,
+      handler(to, from) {
+        if (from && to.id === from.id) return;
+        this.$store.commit("setPlaying", to);
+        this.playing = true;
       }
     }
   },
@@ -151,9 +176,9 @@ export default Vue.extend({
       this.value = 0;
       this.currentTime = "0:00";
       this.playing = false;
-      this.next();
+      this.loop ? this.rePlay() : this.next();
     };
-    // CONFLICT : activated when renaming a playlist 
+    // CONFLICT : activated when renaming a playlist
     // document.addEventListener("keydown", e => {
     //   if (e.keyCode == 32) {
     //     this.playing ? this.pause() : this.play();

@@ -8,7 +8,7 @@
     <div v-if="!isEmpty" class="p-feed animated fadeIn">
       <div ref="table" class="table">
         <virtual-list class="vv-list" wclass="v-list" :size="35" :remain="15" :bench="0">
-          <div @click="cue(song)" :class="{'songPlaying':songPlaying && songPlaying.id==song.id}" v-for="(song,index) in p.songs" class="row" :key="song.id">
+          <div @contextmenu="openContextMenu(song.id)" @click="cue(song)" :class="{'songPlaying':songPlaying && songPlaying.id==song.id}" v-for="(song,index) in p.songs" class="row" :key="song.id">
             <div style="width:5%" class="cell">{{index+1}}</div>
             <div style="width:30%" class="cell">{{song.title}}</div>
             <div style="width:30%" class="cell">{{song.artist}}</div>
@@ -29,8 +29,10 @@
 import Vue from "vue";
 import Header from "@/components/Header.vue";
 import Message from "@/components/Message.vue";
-
 import VirtualList from "vue-virtual-scroll-list";
+import { remote } from "electron";
+import { createPlaylistSongMenu } from "@/services/context";
+const {Menu} = remote
 
 export default Vue.extend({
   props: ["p", "noPlaylist"],
@@ -51,9 +53,11 @@ export default Vue.extend({
     }
   },
   methods: {
-    openMenu(e: Event) {
-      e.stopPropagation();
-      console.log("log");
+    openContextMenu(songId) {
+      const context = Menu.buildFromTemplate(
+        createPlaylistSongMenu(songId,this.p.id)
+      );
+      context.popup({});
     },
     cue(song) {
       this.$store.dispatch("PLAY_SONG", {

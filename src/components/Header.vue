@@ -45,7 +45,7 @@ export default Vue.extend({
     font-weight: 400;
     padding: 0.25rem 0;
     font-size: 1.8rem;
-    letter-spacing: 0.1rem;
+    letter-spacing: 0.2rem;
   }
   .small {
     color: #686868;
@@ -80,7 +80,7 @@ export default Vue.extend({
       cursor: pointer;
       text-transform: capitalize;
       font-size: 1.6rem;
-      margin: 0 .5rem;
+      margin: 0 0.5rem;
       color: darkgray;
       .fa {
         margin: 0 0.5rem;
@@ -94,7 +94,7 @@ export default Vue.extend({
       cursor: pointer;
       text-transform: capitalize;
       font-size: 1.6rem;
-      margin: 0 .5rem;
+      margin: 0 0.5rem;
       color: darkgray;
       .fa {
         margin: 0 0.5rem;

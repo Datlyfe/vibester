@@ -9,8 +9,10 @@ import db from "@/db";
 import { ISong } from "@/models/song";
 import { IPlaylist } from "@/models/playlist";
 import * as media from "@/services/media";
+import VueSVGIcon from 'vue-svgicon'
 import * as resources from "./resources";
 
+Vue.use(VueSVGIcon)
 Vue.use(AsyncComputed);
 Vue.config.productionTip = false;
 Vue.use(Resource, {

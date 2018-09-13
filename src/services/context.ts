@@ -1,8 +1,7 @@
 import store from "@/store";
 import electron from "electron";
 import { IPlaylist } from "@/models/playlist";
-const { shell, remote } = electron;
-const { Menu } = remote;
+import { getSongFromPlaylistById } from '@/services/operations';
 
 export const createPlaylistSubMenu = songsIds => {
   let playlistSubMenu: electron.MenuItemConstructorOptions[] = [
@@ -43,6 +42,24 @@ export const createTuneListContext = songsIds => {
       label: "Add to playlist",
       submenu: createPlaylistSubMenu(songsIds)
     }
+  ];
+  return template;
+};
+
+export const createPlaylistSongMenu = (songId, playlistId) => {
+  const template: electron.MenuItemConstructorOptions[] = [
+    {
+      label: "Play",
+      click:()=>store.dispatch("PLAY_SONG", {
+        song: getSongFromPlaylistById(songId,playlistId),
+        isLocal: true,
+        inPlaylist:playlistId
+      })
+    },
+    {
+      label: "Remove from Playlist" ,
+      click:()=>store.dispatch("REMOVE_SONG_FROM_PLAYLIST",{songId,playlistId})
+    },
   ];
   return template;
 };

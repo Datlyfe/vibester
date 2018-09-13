@@ -1,6 +1,6 @@
 <template>
-  <Message v-if=" allSongs.length==0" msg="Your Library is Empty :(" />
-  <Message v-else-if="songs.length==0 && allSongs.length>0" msg="Your Search Has No Results :(" />
+  <Message v-if=" allSongs.length==0" msg="Your Library is Empty 😔" />
+  <Message v-else-if="songs.length==0 && allSongs.length>0" msg="Your Search Has No Results 😔"/>
   <!-- TABLE -->
   <div v-else ref="table" class="table">
     <!-- TABLE HEADER -->

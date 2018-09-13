@@ -3,7 +3,7 @@
     <!-- Logo -->
     <div class="logo">
       <h1 class="logo__label">Vibester</h1>
-      <img class="logo__img" src="@/assets/img/logo.png" alt="Logo">
+      <!-- <img class="logo__img" src="@/assets/img/logo.png" alt="Logo"> -->
     </div>
     <!-- NAVIGATION -->
     <nav class="nav"> 
@@ -25,9 +25,9 @@ export default Vue.extend({
   data() {
     return {
       items: [
-        { name: "Library", to: "/", icon: "fa fa-folder-open" },
+        { name: "Library", to: "/", icon: "fa fa-music" },
         { name: "Discover", to: "/discover", icon: "fa fa-compass" },
-        { name: "playlists", to: "/playlists", icon: "fa fa-list-ul" },
+        { name: "playlists", to: "/playlists", icon: "fa fa-bars" },
         { name: "Most Played", to: "/most-played", icon: "fa fa-bolt" },
         { name: "Settings", to: "/settings", icon: "fa fa-gear" }
       ]

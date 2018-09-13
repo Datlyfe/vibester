@@ -4,7 +4,7 @@
     <Header title="Discover">
       <div class="search" slot="search">
         <i class="fa fa-search"></i>
-        <input @keyup.enter="search" v-model="term" autocomplete="off" placeholder="Search" class="search__input" type="text">
+        <input @keyup.enter="handleSearch" v-model="term" autocomplete="off" placeholder="Search" class="search__input" type="text">
       </div>
     </Header>
     <!-- GENRES -->
@@ -61,6 +61,7 @@ export default Vue.extend({
         ? this.search(this.next)
         : this.getPlaylist(this.playlistId, this.next);
       this.page++;
+      console.log(this.page)
     },
     goPrev() {
       if(!this.prev) return;
@@ -68,6 +69,11 @@ export default Vue.extend({
         ? this.search(this.prev)
         : this.getPlaylist(this.playlistId, this.prev);
       this.page--;
+    },
+    handleSearch(){
+      this.page=1;
+      this.genreId=-1;
+      this.search();
     },
     handlePlaylist(genre) {
       this.genreId = genre.id;
@@ -77,7 +83,6 @@ export default Vue.extend({
     },
     async search(index = 0) {
       this.mode = "search";
-      this.page=1;
       this.loading = true;
       const { data, next, prev } = await this.$getResource("search", {
         term: this.term,
