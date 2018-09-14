@@ -3,21 +3,15 @@ import router from "./router";
 import store from "./store";
 import Home from "@/views/Home.vue";
 import Resource from "./plugins/resource";
-import AsyncComputed from "vue-async-computed";
-import { ipcRenderer } from "electron";
 import db from "@/db";
-import { ISong } from "@/models/song";
-import { IPlaylist } from "@/models/playlist";
-import * as media from "@/services/media";
 import VueSVGIcon from "vue-svgicon";
+import * as media from "@/services/media";
 import * as resources from "./resources";
-import VueIziToast from "vue-izitoast";
-import "izitoast/dist/css/iziToast.min.css";
+import { IPlaylist } from "@/models/playlist";
+import { ISong } from "@/models/song";
+import { ipcRenderer } from "electron";
 
-Vue.use(VueIziToast);
-console.log(VueIziToast)
 Vue.use(VueSVGIcon);
-Vue.use(AsyncComputed);
 Vue.config.productionTip = false;
 Vue.use(Resource, {
   endpoint: "https://api.deezer.com/",

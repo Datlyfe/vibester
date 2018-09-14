@@ -1,8 +1,9 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import db from "@/db";
-import * as media from "@/services/media";
 import bus from "@/services/bus";
+import * as media from "@/services/media";
+import { default as toast } from "izitoast";
 
 import { ISong } from "@/models/song";
 import { IPlaylist } from "@/models/playlist";
@@ -112,6 +113,16 @@ export default new Vuex.Store({
       let p: IPlaylist = { name: "New Playlist", songs: [] };
       p.id = await db.table("playlists").add(p);
       state.playlists.push(p);
+      toast.destroy();
+      toast.show({
+        message: `${p.name} has been created`,
+        position: "topRight",
+        icon: "fa fa-check",
+        iconColor: "green",
+        timeout: 3000,
+        progressBarColor: "green",
+        transitionIn: "fadeInDown"
+      });
       return p;
     },
     RENAME_PLAYLIST({ state }, { id, name }) {
@@ -124,13 +135,13 @@ export default new Vuex.Store({
       let name = state.playlists[index].name;
       state.playlists.splice(index, 1);
       await db.table("playlists").delete(id);
-      let toast = document.getElementsByClassName("DELETE_PLAYLIST_TOAST")[0];
-      toast && toast.remove();
-      Vue.prototype.$toast.show("Deleted", name, {
-        class: "DELETE_PLAYLIST_TOAST",
+      toast.destroy();
+      toast.show({
+        message: `${name} has been deleted`,
         position: "topRight",
         icon: "fa fa-trash-o",
-        timeout: 1000,
+        iconColor: "#db1d40",
+        timeout: 3000,
         progressBarColor: "#db1d40",
         transitionIn: "fadeInDown"
       });
@@ -145,20 +156,20 @@ export default new Vuex.Store({
         p.songs.push(song);
       }
       await db.table("playlists").update(p.id, { songs: p.songs });
-      let toast = document.getElementsByClassName("ADD_TO_PLAYLIST_TOAST")[0];
-      toast && toast.remove();
-      Vue.prototype.$toast.show(
-        p.name,
-        `${songsIds.length} songs has been added to`,
-        {
-          class: "ADD_TO_PLAYLIST_TOAST",
-          position: "topRight",
-          timeout: 2000,
-          icon: "fa fa-check-circle-o",
-          progressBarColor: "green",
-          transitionIn: "fadeInDown"
-        }
-      );
+      let size = songsIds.length;
+      let message = `${size} ${
+        size <= 1 ? "song" : "songs"
+      } has been added to ${p.name}`;
+      toast.destroy();
+      toast.show({
+        message,
+        position: "topRight",
+        timeout: 3000,
+        iconColor: "green",
+        icon: "fa fa-check",
+        progressBarColor: "green",
+        transitionIn: "fadeInDown"
+      });
     },
     async REMOVE_SONG_FROM_PLAYLIST({ state }, { songId, playlistId }) {
       let pIndex = state.playlists.findIndex(p => p.id == playlistId);
@@ -169,16 +180,13 @@ export default new Vuex.Store({
         .update(playlistId, { songs: state.playlists[pIndex].songs });
     },
     NEW_SONG_NOTIF(_, { title, artist, cover }) {
-      let toast = document.getElementsByClassName("NEW_SONG_TOAST")[0];
-      toast && toast.remove();
-
-      Vue.prototype.$toast.show(artist, title, {
-        class: "NEW_SONG_TOAST",
+      toast.destroy();
+      toast.show({
+        title,
+        message: artist,
         image: cover,
-        closeOnClick: true,
         position: "topRight",
-        timeout: 2000,
-        displayMode: "replace",
+        timeout: 3000,
         transitionIn: "fadeInDown"
       });
     }

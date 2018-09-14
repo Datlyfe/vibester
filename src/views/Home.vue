@@ -12,6 +12,7 @@ import Main from "@/components/Main.vue";
 import Menu from "@/components/Menu.vue";
 import Footer from "@/components/Footer.vue";
 
+import "izitoast/dist/css/iziToast.min.css";
 import "font-awesome/css/font-awesome.css";
 import "@/sass/app.scss";
 

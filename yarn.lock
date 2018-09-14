@@ -5183,7 +5183,7 @@ istanbul-reports@^1.4.1:
   dependencies:
     handlebars "^4.0.11"
 
-izitoast@^1.3.0:
+izitoast@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/izitoast/-/izitoast-1.4.0.tgz#1aa4e3408b7159fba743506af66d8be54fd929fb"
 
@@ -8647,7 +8647,7 @@ supports-color@~5.0.0:
   dependencies:
     has-flag "^2.0.0"
 
-svgo@^1.0.0, svgo@^1.0.4, svgo@^1.0.5:
+svgo@^1.0.0, svgo@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/svgo/-/svgo-1.0.5.tgz#7040364c062a0538abacff4401cea6a26a7a389a"
   dependencies:
@@ -9294,10 +9294,6 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
-vue-async-computed@^3.4.1:
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/vue-async-computed/-/vue-async-computed-3.4.1.tgz#b3923c177b38ab80cb767bbc09cca3dbbb25dd48"
-
 vue-cli-plugin-electron-builder@^1.0.0-rc.2:
   version "1.0.0-rc.2"
   resolved "https://registry.yarnpkg.com/vue-cli-plugin-electron-builder/-/vue-cli-plugin-electron-builder-1.0.0-rc.2.tgz#2968d82b20448306df0e78fc4b7fc9d3b3363c62"
@@ -9329,12 +9325,6 @@ vue-hot-reload-api@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.0.tgz#97976142405d13d8efae154749e88c4e358cf926"
 
-vue-izitoast@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/vue-izitoast/-/vue-izitoast-1.1.0.tgz#4b2b81b91e688eedc95d8f500752ac9ec87d3a8d"
-  dependencies:
-    izitoast "^1.3.0"
-
 vue-jest@^2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/vue-jest/-/vue-jest-2.6.0.tgz#23dc99a4dce0bb59fea3946e1317b234968cf12a"
@@ -9349,10 +9339,6 @@ vue-jest@^2.6.0:
     source-map "^0.5.6"
     tsconfig "^7.0.0"
     vue-template-es2015-compiler "^1.6.0"
-
-vue-js-modal@^1.3.25:
-  version "1.3.25"
-  resolved "https://registry.yarnpkg.com/vue-js-modal/-/vue-js-modal-1.3.25.tgz#245f9170374f98d9d23c97cf8ce8df9156340335"
 
 vue-loader@^15.3.0:
   version "15.4.1"
@@ -9374,23 +9360,6 @@ vue-style-loader@^4.1.0:
   dependencies:
     hash-sum "^1.0.2"
     loader-utils "^1.0.2"
-
-vue-svg-inline-loader@^1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/vue-svg-inline-loader/-/vue-svg-inline-loader-1.0.8.tgz#ea28f061924ed5ecfa55137ddf8d4137b482c6a1"
-  dependencies:
-    loader-utils "^1.1.0"
-    schema-utils "^1.0.0"
-    svgo "^1.0.5"
-
-vue-svg-loader@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/vue-svg-loader/-/vue-svg-loader-0.9.0.tgz#87256d2cb38eba429f33f13663905ffc744a3bb2"
-  dependencies:
-    loader-utils "^1.1.0"
-    svgo "^1.0.4"
-    vue-template-compiler "^2.5.17"
-    vue-template-es2015-compiler "^1.6.0"
 
 vue-svgicon@^3.1.0:
   version "3.1.0"

@@ -7,6 +7,6 @@ declare module "*.vue" {
 declare module "vue/types/options" {
   interface ComponentOptions<V extends Vue> {
     asyncComputed?: any;
-    resource?:string
+    resource?: string;
   }
 }
