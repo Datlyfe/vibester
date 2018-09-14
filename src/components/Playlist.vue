@@ -32,7 +32,9 @@ import Message from "@/components/Message.vue";
 import VirtualList from "vue-virtual-scroll-list";
 import { remote } from "electron";
 import { createPlaylistSongMenu } from "@/services/context";
-const {Menu} = remote
+import { PLAY_SONG } from "@/types/actionTypes";
+
+const { Menu } = remote;
 
 export default Vue.extend({
   props: ["p", "noPlaylist"],
@@ -55,12 +57,12 @@ export default Vue.extend({
   methods: {
     openContextMenu(songId) {
       const context = Menu.buildFromTemplate(
-        createPlaylistSongMenu(songId,this.p.id)
+        createPlaylistSongMenu(songId, this.p.id)
       );
       context.popup({});
     },
     cue(song) {
-      this.$store.dispatch("PLAY_SONG", {
+      this.$store.dispatch(PLAY_SONG, {
         song,
         isLocal: true,
         inPlaylist: this.p.id

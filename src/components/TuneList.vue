@@ -41,6 +41,8 @@ import VirtualList from "vue-virtual-scroll-list";
 import Message from "@/components/Message.vue";
 import { IPlaylist } from "@/models/playlist";
 import { createTuneListContext } from "@/services/context";
+import { PLAY_SONG } from "@/types/actionTypes";
+
 const { Menu } = remote;
 export default Vue.extend({
   props: ["songs"],
@@ -63,7 +65,7 @@ export default Vue.extend({
   },
   methods: {
     cue(song: ISong) {
-      this.$store.dispatch("PLAY_SONG", { song, isLocal: true });
+      this.$store.dispatch(PLAY_SONG, { song, isLocal: true });
     },
     selectSong(e, id, index) {
       if (isLeftClick(e) || (isRightClick(e) && this.isSelectableTrack(id))) {

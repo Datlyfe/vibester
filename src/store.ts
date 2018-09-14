@@ -7,6 +7,7 @@ import { default as toast } from "izitoast";
 
 import { ISong } from "@/models/song";
 import { IPlaylist } from "@/models/playlist";
+import { PLAY_SONG } from '@/types/actionTypes';
 
 Vue.use(Vuex);
 
@@ -67,9 +68,9 @@ export default new Vuex.Store({
       const index = source.findIndex(song => song.id == id);
       const size = source.length;
       if (size > 0 && index == size - 1) {
-        dispatch("PLAY_SONG", { song: source[0], isLocal: true, inPlaylist });
+        dispatch(PLAY_SONG, { song: source[0], isLocal: true, inPlaylist });
       } else {
-        dispatch("PLAY_SONG", {
+        dispatch(PLAY_SONG, {
           song: source[index + 1],
           isLocal: true,
           inPlaylist
@@ -85,13 +86,13 @@ export default new Vuex.Store({
       const size = source.length;
 
       if (size > 0 && index == 0) {
-        dispatch("PLAY_SONG", {
+        dispatch(PLAY_SONG, {
           song: source[size - 1],
           isLocal: true,
           inPlaylist
         });
       } else {
-        dispatch("PLAY_SONG", {
+        dispatch(PLAY_SONG, {
           song: source[index - 1],
           isLocal: true,
           inPlaylist
@@ -103,7 +104,7 @@ export default new Vuex.Store({
         ? state.playlists.filter(p => p.id == inPlaylist)[0].songs
         : state.localSongs;
       const size = source.length;
-      dispatch("PLAY_SONG", {
+      dispatch(PLAY_SONG, {
         song: source[Math.floor(Math.random() * (size - 1))],
         isLocal: true,
         inPlaylist
@@ -141,7 +142,7 @@ export default new Vuex.Store({
         position: "topRight",
         icon: "fa fa-trash-o",
         iconColor: "#db1d40",
-        timeout: 3000,
+        timeout: 2000,
         progressBarColor: "#db1d40",
         transitionIn: "fadeInDown"
       });
@@ -164,7 +165,7 @@ export default new Vuex.Store({
       toast.show({
         message,
         position: "topRight",
-        timeout: 3000,
+        timeout: 2500,
         iconColor: "green",
         icon: "fa fa-check",
         progressBarColor: "green",
@@ -186,7 +187,7 @@ export default new Vuex.Store({
         message: artist,
         image: cover,
         position: "topRight",
-        timeout: 3000,
+        timeout: 2500,
         transitionIn: "fadeInDown"
       });
     }

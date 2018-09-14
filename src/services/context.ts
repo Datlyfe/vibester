@@ -1,15 +1,21 @@
 import store from "@/store";
 import electron from "electron";
 import { IPlaylist } from "@/models/playlist";
-import { getSongFromPlaylistById } from '@/services/operations';
+import { getSongFromPlaylistById } from "@/services/operations";
+import {
+  PLAY_SONG,
+  NEW_PLAYLIST,
+  ADD_TO_PLAYLIST,
+  REMOVE_SONG_FROM_PLAYLIST
+} from "@/types/actionTypes";
 
 export const createPlaylistSubMenu = songsIds => {
   let playlistSubMenu: electron.MenuItemConstructorOptions[] = [
     {
       label: "New Playlist",
       click: () => {
-        store.dispatch("NEW_PLAYLIST").then(({ id }: IPlaylist) => {
-          store.dispatch("ADD_TO_PLAYLIST", {
+        store.dispatch(NEW_PLAYLIST).then(({ id }: IPlaylist) => {
+          store.dispatch(ADD_TO_PLAYLIST, {
             songsIds,
             playlistId: id
           });
@@ -22,7 +28,7 @@ export const createPlaylistSubMenu = songsIds => {
     playlistSubMenu.push({
       label: p.name,
       click: () =>
-        store.dispatch("ADD_TO_PLAYLIST", {
+        store.dispatch(ADD_TO_PLAYLIST, {
           songsIds,
           playlistId: p.id
         })
@@ -50,16 +56,18 @@ export const createPlaylistSongMenu = (songId, playlistId) => {
   const template: electron.MenuItemConstructorOptions[] = [
     {
       label: "Play",
-      click:()=>store.dispatch("PLAY_SONG", {
-        song: getSongFromPlaylistById(songId,playlistId),
-        isLocal: true,
-        inPlaylist:playlistId
-      })
+      click: () =>
+        store.dispatch(PLAY_SONG, {
+          song: getSongFromPlaylistById(songId, playlistId),
+          isLocal: true,
+          inPlaylist: playlistId
+        })
     },
     {
-      label: "Remove from Playlist" ,
-      click:()=>store.dispatch("REMOVE_SONG_FROM_PLAYLIST",{songId,playlistId})
-    },
+      label: "Remove from Playlist",
+      click: () =>
+        store.dispatch(REMOVE_SONG_FROM_PLAYLIST, { songId, playlistId })
+    }
   ];
   return template;
 };

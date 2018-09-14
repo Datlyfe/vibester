@@ -21,6 +21,8 @@ import Vue from "vue";
 import bus from "@/services/bus";
 import { shorten } from "@/services/helpers";
 import Message from "@/components/Message.vue";
+import { PLAY_SONG } from '@/types/actionTypes';
+
 
 
 import { ISong } from "@/models/song";
@@ -35,7 +37,7 @@ export default Vue.extend({
       return { backgroundImage: `url(${src})` };
     },
     cue(song: ISong) {
-      this.$store.dispatch("PLAY_SONG", { song, isLocal: false });
+      this.$store.dispatch(PLAY_SONG, { song, isLocal: false });
     },
     handleImageLoad(e) {
       e.target.parentNode.classList.remove("js-loading");

@@ -33,7 +33,11 @@ import Playlist from "@/components/Playlist.vue";
 import bus from "@/services/bus";
 import electron from "electron";
 import { IPlaylist } from "@/models/playlist";
-import store from "@/store";
+import {
+  NEW_PLAYLIST,
+  RENAME_PLAYLIST,
+  DELETE_PLAYLIST
+} from "@/types/actionTypes";
 
 export default Vue.extend({
   data() {
@@ -91,7 +95,7 @@ export default Vue.extend({
       this.delete(p.id);
     },
     delete(id) {
-      this.$store.dispatch("DELETE_PLAYLIST", id).then(() => {
+      this.$store.dispatch(DELETE_PLAYLIST, id).then(() => {
         this.selectedPlaylist =
           this.playlists[this.playlists.length - 1] || this.defaultPlaylist;
       });
@@ -102,7 +106,7 @@ export default Vue.extend({
         console.warn("empty name not allowed");
         return;
       }
-      this.$store.dispatch("RENAME_PLAYLIST", {
+      this.$store.dispatch(RENAME_PLAYLIST, {
         id: this.selectedPlaylist.id,
         name: e.target.value
       });
@@ -112,7 +116,7 @@ export default Vue.extend({
       bus.$emit("playlistCue", p);
     },
     newPlaylist() {
-      this.$store.dispatch("NEW_PLAYLIST").then((p: IPlaylist) => {
+      this.$store.dispatch(NEW_PLAYLIST).then((p: IPlaylist) => {
         this.selectedPlaylist = p;
       });
     }

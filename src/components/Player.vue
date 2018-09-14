@@ -55,6 +55,13 @@ import { shorten, formatSecondsAsTime } from "@/services/helpers";
 import fallbackImage from "@/assets/img/disk.jpg";
 import "@/compiled-icons";
 import { ISong } from "@/models/song";
+import {
+  PLAY_NEXT_SONG,
+  PLAY_PREV_SONG,
+  PLAY_RANDOM_SONG,
+  NEW_SONG_NOTIF
+} from "@/types/actionTypes";
+
 // import { Notification } from 'electron';
 export default Vue.extend({
   props: ["song", "isLocal", "inPlaylist"],
@@ -130,22 +137,22 @@ export default Vue.extend({
     next() {
       this.isLocal &&
         (!this.shuffle
-          ? this.$store.dispatch("PLAY_NEXT_SONG", {
+          ? this.$store.dispatch(PLAY_NEXT_SONG, {
               id: this.song.id,
               inPlaylist: this.inPlaylist
             })
-          : this.$store.dispatch("PLAY_RANDOM_SONG", {
+          : this.$store.dispatch(PLAY_RANDOM_SONG, {
               inPlaylist: this.inPlaylist
             }));
     },
     prev() {
       this.isLocal &&
         (!this.shuffle
-          ? this.$store.dispatch("PLAY_PREV_SONG", {
+          ? this.$store.dispatch(PLAY_PREV_SONG, {
               id: this.song.id,
               inPlaylist: this.inPlaylist
             })
-          : this.$store.dispatch("PLAY_RANDOM_SONG", {
+          : this.$store.dispatch(PLAY_RANDOM_SONG, {
               inPlaylist: this.inPlaylist
             }));
     }
@@ -158,7 +165,7 @@ export default Vue.extend({
         this.$store.commit("setPlaying", to);
         this.playing = true;
 
-        this.$store.dispatch("NEW_SONG_NOTIF", {
+        this.$store.dispatch(NEW_SONG_NOTIF, {
           cover: to.cover,
           title: to.title,
           artist: to.artist
