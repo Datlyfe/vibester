@@ -181,35 +181,13 @@ input[type="range"] {
   animation-duration: 0.1s;
   position: absolute;
   font-size: 1.6rem;
-  background-color: white;
-  border: 1px solid #cecece;
-  color: #141414;
-  font-size: 13px;
+  background-color: #232323;
+  border: 2px solid #cecece;
+  color: ghostwhite;
+  font-size: 1.3rem;
   font-weight: 700;
-  padding: 0px 5px;
+  padding: 0 .5rem;
   bottom: 14px;
   z-index: 1;
-  transform: translateX(-11px);
-  &::before,
-  &::after {
-    content: "";
-    position: absolute;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-color: transparent;
-    border-bottom: 0;
-  }
-  &::before {
-    top: 18px;
-    left: 5px;
-    border-top-color: #cecece;
-    border-width: 6px;
-  }
-  &::after {
-    top: 18px;
-    left: 6px;
-    border-top-color: white;
-    border-width: 5px;
-  }
+  transform: translateX(-12px);
 }

@@ -32,7 +32,7 @@ export default new Router({
     {
       path: "/settings",
       name: "settings",
-      component: loadView('Settings')
+      component: loadView("Settings")
     }
   ]
 });

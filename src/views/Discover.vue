@@ -61,7 +61,6 @@ export default Vue.extend({
         ? this.search(this.next)
         : this.getPlaylist(this.playlistId, this.next);
       this.page++;
-      console.log(this.page);
     },
     goPrev() {
       if (!this.prev) return;
@@ -126,7 +125,7 @@ export default Vue.extend({
 }
 
 .item {
-  margin-right:1.5rem;
+  margin-right: 1.5rem;
   font-size: 1.5rem;
   font-weight: 700;
   text-transform: capitalize;

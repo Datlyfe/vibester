@@ -7,15 +7,15 @@
     </Header>
     <div v-if="!isEmpty" class="p-feed animated fadeIn">
       <div ref="table" class="table">
-        <virtual-list class="vv-list" wclass="v-list" :size="35" :remain="17" :bench="0">
-          <div @contextmenu="openContextMenu(song.id)" @click="cue(song)" :class="{'songPlaying':songPlaying && songPlaying.id==song.id}" v-for="(song,index) in p.songs" class="row" :key="song.id">
-            <div style="width:5%" class="cell">{{index+1}}</div>
+        <virtual-list class="vv-list" wclass="v-list" :size="35" :remain="19" :bench="0">
+          <div @contextmenu="openContextMenu(song.id)" @click="cue(song)" :class="{'songPlaying':isPlaying(song)}" v-for="(song,index) in p.songs" class="row" :key="song.id">
+            <div style="width:5%" class="cell">
+              <i class=" xd fa fa-arrow-right" v-if="isPlaying(song)" ></i>
+              <span v-else>{{index+1}}</span>
+            </div>
             <div style="width:30%" class="cell">{{song.title}}</div>
             <div style="width:30%" class="cell">{{song.artist}}</div>
             <div style="width:10%" class="cell">{{song.duration}}</div>
-            <div style="width:25%" class="cell indicator">
-              <!-- SOME ANIMATED INDICATOR SHOULD BE HERE -->
-            </div>
           </div>
         </virtual-list>
       </div>
@@ -55,6 +55,9 @@ export default Vue.extend({
     }
   },
   methods: {
+    isPlaying(song) {
+      return this.songPlaying && this.songPlaying.path == song.path;
+    },
     openContextMenu(songId) {
       const context = Menu.buildFromTemplate(
         createPlaylistSongMenu(songId, this.p.id)

@@ -138,15 +138,14 @@ export default Vue.extend({
     },
     showTooltip(e) {
       const barWidth = e.currentTarget.offsetWidth;
-      const percent = e.offsetX / barWidth * 100;
-      const duration = percent * this.audio.duration / 100;
+      const percent = (e.offsetX / barWidth) * 100;
+      const duration = (percent * this.audio.duration) / 100;
       this.offset = percent;
       this.tipValue = parseDuration(duration);
       this.showTip = true;
     },
     hideTooltip(e) {
       this.showTip = false;
-      console.log("leave");
     },
     handleProgress(e: any) {
       var percent = e.offsetX / e.target.offsetWidth;

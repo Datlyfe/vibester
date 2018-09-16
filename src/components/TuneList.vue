@@ -1,5 +1,5 @@
 <template>
-  <Message v-if=" allSongs.length==0" msg="Your Library is Empty 😔" />
+  <Message v-if=" allSongs.length==0" msg="Your Library is Empty" />
   <Message v-else-if="songs.length==0 && allSongs.length>0" msg="Your Search Has No Results 😔"/>
   <!-- TABLE -->
   <div v-else ref="table" class="table">
@@ -12,16 +12,16 @@
       <div class="cell duration">Duration</div>
     </div>
     <!-- TABLE BODY -->
-    <virtual-list class="vv-list" wclass="v-list" :size="35" :remain="16" :bench="0">
-      <div  :class="{'selected':selected.includes(song.id),'songPlaying': songPlaying && songPlaying.id==song.id}" tabindex="-1" @contextmenu="showContextMenu" @mousedown="selectSong($event,song.id,index)"  @dblclick="cue(song)" v-for="(song,index) in songs" class="row" :key="song.id">
-        <div class="cell num">{{index+1}}</div>
+    <virtual-list class="vv-list" wclass="v-list" :size="35" :remain="18" :bench="0">
+      <div  :class="{'selected':selected.includes(song.id),'songPlaying': isPlaying(song)}" tabindex="-1" @contextmenu="showContextMenu" @mousedown="selectSong($event,song.id,index)"  @dblclick="cue(song)" v-for="(song,index) in songs" class="row" :key="song.id">
+        <div class="cell num">
+          <i class=" xd fa fa-arrow-right" v-if="isPlaying(song)" ></i>
+          <span v-else>{{index+1}}</span>
+        </div>
         <div class="cell title">{{song.title}}</div>
         <div class="cell artist">{{song.artist}}</div>
         <div class="cell album">{{song.album}}</div>
         <div class="cell duration">{{song.duration}}</div>
-        <div class="cell indicator">
-         <!-- SOME ANIMATED INDICATOR SHOULD BE HERE -->
-        </div>
       </div>
     </virtual-list>
   </div>
@@ -66,6 +66,9 @@ export default Vue.extend({
     }
   },
   methods: {
+    isPlaying(song) {
+      return this.songPlaying && this.songPlaying.path == song.path;
+    },
     cue(song: ISong) {
       this.$store.dispatch(PLAY_SONG, { song, isLocal: true });
     },
