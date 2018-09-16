@@ -67,7 +67,8 @@ body {
 }
 
 .discover,
-.files {
+.files,
+.settings {
   padding: 3rem;
   animation-duration: 0.3s;
 }
@@ -197,7 +198,7 @@ body {
   }
 }
 
-.iziToast>.iziToast-cover{
+.iziToast > .iziToast-cover {
   background-repeat: unset !important;
 }
 

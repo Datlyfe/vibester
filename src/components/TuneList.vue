@@ -5,6 +5,7 @@
   <div v-else ref="table" class="table">
     <!-- TABLE HEADER -->
     <div  class="row header">
+      <div class="cell num">#</div>
       <div class="cell title">Title</div>
       <div class="cell artist">Artist</div>
       <div class="cell album">Album</div>
@@ -13,11 +14,12 @@
     <!-- TABLE BODY -->
     <virtual-list class="vv-list" wclass="v-list" :size="35" :remain="16" :bench="0">
       <div  :class="{'selected':selected.includes(song.id),'songPlaying': songPlaying && songPlaying.id==song.id}" tabindex="-1" @contextmenu="showContextMenu" @mousedown="selectSong($event,song.id,index)"  @dblclick="cue(song)" v-for="(song,index) in songs" class="row" :key="song.id">
+        <div class="cell num">{{index+1}}</div>
         <div class="cell title">{{song.title}}</div>
         <div class="cell artist">{{song.artist}}</div>
         <div class="cell album">{{song.album}}</div>
         <div class="cell duration">{{song.duration}}</div>
-        <div style="width:15%" class="cell indicator">
+        <div class="cell indicator">
          <!-- SOME ANIMATED INDICATOR SHOULD BE HERE -->
         </div>
       </div>

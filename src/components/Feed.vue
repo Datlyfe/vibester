@@ -21,14 +21,12 @@ import Vue from "vue";
 import bus from "@/services/bus";
 import { shorten } from "@/services/helpers";
 import Message from "@/components/Message.vue";
-import { PLAY_SONG } from '@/types/actionTypes';
-
-
+import { PLAY_SONG } from "@/types/actionTypes";
 
 import { ISong } from "@/models/song";
 export default Vue.extend({
   props: ["songs"],
-  components:{
+  components: {
     Message
   },
   methods: {

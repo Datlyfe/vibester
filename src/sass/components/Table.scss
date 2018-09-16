@@ -12,12 +12,11 @@
   backface-visibility: hidden;
 }
 .row {
-  .title {
-    width: 25%;
+  .num{
+    width: 5%
   }
-  .artist {
-    width: 25%;
-  }
+  .title,
+  .artist,
   .album {
     width: 25%;
   }
@@ -25,10 +24,8 @@
     width: 10%;
     text-align: center;
   }
-  .genre {
-    width: 15%;
-  }
   .indicator {
+    width: 10%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -48,13 +45,15 @@
 
 .row:hover {
   cursor: pointer;
+  // background: rgba(#7e2236,.8);
+  // transition: all .1s;
   .cell {
     color: ghostwhite !important;
   }
 }
 .row.selected {
   border-radius: 6px;
-  background-color: rgba(#7e2236,.8);
+  background-color: var(--primary);
   .cell {
     color: ghostwhite !important;
   }

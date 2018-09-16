@@ -5,8 +5,11 @@
     <!-- CONTROLS -->
     <div class="controls">
       <i :class="{'deactivate':!isLocal}" @click="prev" class="fa fa-backward"></i>
-      <i @click="play" v-if="!playing" class="fa fa-play"></i>
-      <i @click="pause" v-if="playing" class="fa fa-pause"></i>
+      <i v-if="!ready && !isLocal" class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+      <template v-else>
+        <i @click="play" v-if="!playing" class="fa fa-play"></i>
+        <i @click="pause" v-if="playing" class="fa fa-pause"></i>
+      </template>
       <i :class="{'deactivate':!isLocal}" @click="next" class="fa fa-forward"></i>
     </div>
     <!-- SONG COVER -->
@@ -41,7 +44,10 @@
         <span class="time" v-else>{{currentTime}} / 0:30</span>
       </div>
       <!-- PROGRESS BAR -->
-      <progress class="progress-bar" @click="handleProgress" :value="value" max="1" ref="progress"></progress>
+      <div class="progress-wrap">
+        <div v-show="showTip" :style="{'left':`${offset}%`}" class="playing-bar-tooltip animated fadeIn">{{tipValue}}</div>
+        <progress  @mousemove="showTooltip" @mouseout="hideTooltip"  @click="handleProgress"  class="progress-bar"  :value="value" max="1" ref="progress"></progress>
+      </div>
     </div>
     <!-- REF LINKS -->
     <div class="links"></div>
@@ -61,12 +67,14 @@ import {
   PLAY_RANDOM_SONG,
   NEW_SONG_NOTIF
 } from "@/types/actionTypes";
+import { parseDuration } from "@/services/media";
 
 // import { Notification } from 'electron';
 export default Vue.extend({
   props: ["song", "isLocal", "inPlaylist"],
   data() {
     return {
+      ready: false,
       playing: true,
       duration: "0:00",
       currentTime: "0:00",
@@ -74,7 +82,10 @@ export default Vue.extend({
       savedVolume: 0,
       checked: false,
       loop: false,
-      shuffle: false
+      shuffle: false,
+      offset: 0,
+      showTip: false,
+      tipValue: 0
     };
   },
   computed: {
@@ -125,6 +136,18 @@ export default Vue.extend({
     noImage(e: any) {
       e.target.src = fallbackImage;
     },
+    showTooltip(e) {
+      const barWidth = e.currentTarget.offsetWidth;
+      const percent = e.offsetX / barWidth * 100;
+      const duration = percent * this.audio.duration / 100;
+      this.offset = percent;
+      this.tipValue = parseDuration(duration);
+      this.showTip = true;
+    },
+    hideTooltip(e) {
+      this.showTip = false;
+      console.log("leave");
+    },
     handleProgress(e: any) {
       var percent = e.offsetX / e.target.offsetWidth;
       this.audio.currentTime = percent * this.audio.duration;
@@ -162,6 +185,7 @@ export default Vue.extend({
       immediate: true,
       handler(to: ISong, from) {
         if (from && to.id === from.id) return;
+        this.ready = false;
         this.$store.commit("setPlaying", to);
         this.playing = true;
 
@@ -174,25 +198,29 @@ export default Vue.extend({
     }
   },
   mounted() {
-    this.audio.volume = this.$store.state.volumeLevel;
-    this.audio.onloadedmetadata = () =>
+    const player = this.audio as HTMLAudioElement;
+    player.volume = this.$store.state.volumeLevel;
+    player.onloadedmetadata = () =>
       (this.duration = formatSecondsAsTime(
-        Math.floor(this.audio.duration).toString()
+        Math.floor(player.duration).toString()
       ));
-    this.audio.ontimeupdate = (e: any) => {
+    player.ontimeupdate = (e: any) => {
       this.currentTime = formatSecondsAsTime(
-        Math.floor(this.audio.currentTime).toString()
+        Math.floor(player.currentTime).toString()
       );
       let time = e.target.currentTime / e.target.duration;
       time = time == 1 ? 0 : time;
       time = time ? time : 0;
       this.value = time;
     };
-    this.audio.onended = () => {
+    player.onended = () => {
       this.value = 0;
       this.currentTime = "0:00";
       this.playing = false;
       this.loop ? this.rePlay() : this.next();
+    };
+    player.oncanplaythrough = () => {
+      this.ready = true;
     };
     // CONFLICT : activated when renaming a playlist
     // document.addEventListener("keydown", e => {

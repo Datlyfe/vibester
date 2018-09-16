@@ -56,23 +56,23 @@ export default Vue.extend({
   },
   methods: {
     goNext() {
-      if(!this.next) return
+      if (!this.next) return;
       this.mode == "search"
         ? this.search(this.next)
         : this.getPlaylist(this.playlistId, this.next);
       this.page++;
-      console.log(this.page)
+      console.log(this.page);
     },
     goPrev() {
-      if(!this.prev) return;
+      if (!this.prev) return;
       this.mode == "search"
         ? this.search(this.prev)
         : this.getPlaylist(this.playlistId, this.prev);
       this.page--;
     },
-    handleSearch(){
-      this.page=1;
-      this.genreId=-1;
+    handleSearch() {
+      this.page = 1;
+      this.genreId = -1;
       this.search();
     },
     handlePlaylist(genre) {
@@ -126,11 +126,11 @@ export default Vue.extend({
 }
 
 .item {
+  margin-right:1.5rem;
   font-size: 1.5rem;
   font-weight: 700;
   text-transform: capitalize;
   color: #686868;
-  margin: 0 1rem;
   transition: all 0.2s;
   &:hover {
     color: white;
@@ -182,5 +182,3 @@ export default Vue.extend({
   }
 }
 </style>
-
-

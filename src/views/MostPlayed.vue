@@ -5,13 +5,12 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Header from '@/components/Header.vue'
+import Vue from "vue";
+import Header from "@/components/Header.vue";
 
 export default Vue.extend({
-  components:{
+  components: {
     Header
   }
-})
+});
 </script>
-

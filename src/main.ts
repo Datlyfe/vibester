@@ -10,7 +10,7 @@ import * as resources from "./resources";
 import { IPlaylist } from "@/models/playlist";
 import { ISong } from "@/models/song";
 import { ipcRenderer } from "electron";
-import { READ_MUSIC_FOLDER } from '@/types/actionTypes';
+import { READ_MUSIC_FOLDER } from "@/types/actionTypes";
 
 Vue.use(VueSVGIcon);
 Vue.config.productionTip = false;

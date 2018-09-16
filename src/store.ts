@@ -7,7 +7,7 @@ import { default as toast } from "izitoast";
 
 import { ISong } from "@/models/song";
 import { IPlaylist } from "@/models/playlist";
-import { PLAY_SONG } from '@/types/actionTypes';
+import { PLAY_SONG } from "@/types/actionTypes";
 
 Vue.use(Vuex);
 
