@@ -751,11 +751,19 @@
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.1.tgz#53f349bb986ab273d601175aa1b25a655ab90ee3"
 
+"@tokenizer/token@^0.1.0", "@tokenizer/token@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@tokenizer/token/-/token-0.1.1.tgz#f0d92c12f87079ddfd1b29f614758b9696bc29e3"
+
 "@types/commander@^2.11.0":
   version "2.12.2"
   resolved "https://registry.yarnpkg.com/@types/commander/-/commander-2.12.2.tgz#183041a23842d4281478fa5d23c5ca78e6fd08ae"
   dependencies:
     commander "*"
+
+"@types/debug@^4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@types/debug/-/debug-4.1.5.tgz#b14efa8852b7768d898906613c23f688713e02cd"
 
 "@types/jest@^23.1.4":
   version "23.3.1"
@@ -2507,7 +2515,7 @@ content-disposition@0.5.2:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/content-disposition/-/content-disposition-0.5.2.tgz#0cf68bb9ddf5f2be7961c3a85178cb85dba78cb4"
 
-content-type@~1.0.4:
+content-type@^1.0.4, content-type@~1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/content-type/-/content-type-1.0.4.tgz#e138cc75e040c727b1966fe5e5f8c9aee256fe3b"
 
@@ -2909,6 +2917,12 @@ debug@^3.0.0, debug@^3.1.0:
   resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
   dependencies:
     ms "2.0.0"
+
+debug@^4.1.0, debug@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-4.1.1.tgz#3b72260255109c6b589cee050f1d516139664791"
+  dependencies:
+    ms "^2.1.1"
 
 decamelize@^1.0.0, decamelize@^1.1.1, decamelize@^1.1.2:
   version "1.2.0"
@@ -3401,7 +3415,7 @@ es-to-primitive@^1.1.1:
     is-date-object "^1.0.1"
     is-symbol "^1.0.1"
 
-es6-promise@^4.0.5, es6-promise@^4.2.4:
+es6-promise@^4.0.5:
   version "4.2.4"
   resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.2.4.tgz#dc4221c2b16518760bd8c39a52d8f356fc00ed29"
 
@@ -3877,9 +3891,14 @@ file-loader@^1.1.11:
     loader-utils "^1.0.2"
     schema-utils "^0.4.5"
 
-file-type@9:
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/file-type/-/file-type-9.0.0.tgz#a68d5ad07f486414dfb2c8866f73161946714a18"
+file-type@^13.1.2:
+  version "13.1.2"
+  resolved "https://registry.yarnpkg.com/file-type/-/file-type-13.1.2.tgz#0e5b72bca7569c152e2d5a84ece07e94f77f833f"
+  dependencies:
+    readable-web-to-node-stream "^2.0.0"
+    strtok3 "^5.0.2"
+    token-types "^2.0.0"
+    typedarray-to-buffer "^3.1.5"
 
 filename-regex@^2.0.0:
   version "2.0.1"
@@ -4656,6 +4675,10 @@ ieee754@^1.1.11, ieee754@^1.1.4:
   version "1.1.12"
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.12.tgz#50bf24e5b9c8bb98af4964c941cdb0918da7b60b"
 
+ieee754@^1.1.13:
+  version "1.1.13"
+  resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.13.tgz#ec168558e95aa181fd87d37f55c32bbcb6708b84"
+
 iferr@^0.1.5:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/iferr/-/iferr-0.1.5.tgz#c60eed69e6d8fdb6b3104a1fcbca1c192dc5b501"
@@ -5045,7 +5068,7 @@ is-symbol@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/is-symbol/-/is-symbol-1.0.1.tgz#3cc59f00025194b6ab2e38dbae6689256b660572"
 
-is-typedarray@~1.0.0:
+is-typedarray@^1.0.0, is-typedarray@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/is-typedarray/-/is-typedarray-1.0.0.tgz#e479c80858df0c1b11ddda6940f96011fcda4a9a"
 
@@ -5998,9 +6021,13 @@ mdn-data@~1.1.0:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/mdn-data/-/mdn-data-1.1.4.tgz#50b5d4ffc4575276573c4eedb8780812a8419f01"
 
-media-typer@0.3.0, media-typer@^0.3.0:
+media-typer@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
+
+media-typer@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-1.1.0.tgz#6ab74b8f2d3320f2064b2a87a38e7931ff3a5561"
 
 mem@^1.1.0:
   version "1.1.0"
@@ -6231,6 +6258,10 @@ ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
 
+ms@^2.1.1:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
+
 multicast-dns-service-types@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/multicast-dns-service-types/-/multicast-dns-service-types-1.1.0.tgz#899f11d9686e5e05cb91b35d5f0e63b773cfc901"
@@ -6242,17 +6273,16 @@ multicast-dns@^6.0.1:
     dns-packet "^1.3.1"
     thunky "^1.0.2"
 
-music-metadata@^2.6.1:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/music-metadata/-/music-metadata-2.6.1.tgz#bfdf24f4620f8f929e278d72ef9f29ef5b347b36"
+music-metadata@^6.3.1:
+  version "6.3.1"
+  resolved "https://registry.yarnpkg.com/music-metadata/-/music-metadata-6.3.1.tgz#ba849178c741af21025f65c24660adf6e93bb82a"
   dependencies:
-    debug "^3.1.0"
-    es6-promise "^4.2.4"
-    file-type "9"
-    media-typer "^0.3.0"
-    strtok3 "^1.5.3"
-    then-read-stream "^1.2.1"
-    token-types "^0.10.0"
+    content-type "^1.0.4"
+    debug "^4.1.0"
+    file-type "^13.1.2"
+    media-typer "^1.1.0"
+    strtok3 "^6.0.0"
+    token-types "^2.0.0"
 
 mute-stream@0.0.7:
   version "0.0.7"
@@ -6934,6 +6964,10 @@ pbkdf2@^3.0.3:
     ripemd160 "^2.0.1"
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
+
+peek-readable@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/peek-readable/-/peek-readable-3.1.0.tgz#250b08b7de09db8573d7fd8ea475215bbff14348"
 
 pend@~1.2.0:
   version "1.2.0"
@@ -7620,6 +7654,10 @@ readable-stream@~2.0.6:
     process-nextick-args "~1.0.6"
     string_decoder "~0.10.x"
     util-deprecate "~1.0.1"
+
+readable-web-to-node-stream@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/readable-web-to-node-stream/-/readable-web-to-node-stream-2.0.0.tgz#751e632f466552ac0d5c440cc01470352f93c4b7"
 
 readdirp@^2.0.0:
   version "2.1.0"
@@ -8595,14 +8633,22 @@ strip-json-comments@^2.0.0, strip-json-comments@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
 
-strtok3@^1.5.3:
-  version "1.5.4"
-  resolved "https://registry.yarnpkg.com/strtok3/-/strtok3-1.5.4.tgz#b96590a36a78c9acabbf5590d779b5cabf809efc"
+strtok3@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/strtok3/-/strtok3-5.0.2.tgz#bb81f1f56742e16f1a30ccce5dc3d9498aa5475a"
   dependencies:
-    debug "^3.1.0"
-    es6-promise "^4.2.4"
-    then-read-stream "^1.2.1"
-    token-types "^0.10.0"
+    "@tokenizer/token" "^0.1.1"
+    debug "^4.1.1"
+    peek-readable "^3.1.0"
+
+strtok3@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/strtok3/-/strtok3-6.0.0.tgz#d6b900863daeacfe6c1724c6e7bb36d7a58e83c8"
+  dependencies:
+    "@tokenizer/token" "^0.1.1"
+    "@types/debug" "^4.1.5"
+    debug "^4.1.1"
+    peek-readable "^3.1.0"
 
 stylehacks@^4.0.0:
   version "4.0.0"
@@ -8749,12 +8795,6 @@ text-table@~0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
 
-then-read-stream@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/then-read-stream/-/then-read-stream-1.2.1.tgz#9baddcb8a4ebc8a6fb36436985d24c36f7908829"
-  dependencies:
-    es6-promise "^4.2.4"
-
 thread-loader@^1.1.5:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/thread-loader/-/thread-loader-1.2.0.tgz#35dedb23cf294afbbce6c45c1339b950ed17e7a4"
@@ -8855,9 +8895,12 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
 
-token-types@^0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/token-types/-/token-types-0.10.0.tgz#b45ac19ede381ff58fc818d760f7113a6158693b"
+token-types@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/token-types/-/token-types-2.0.0.tgz#b23618af744818299c6fbf125e0fdad98bab7e85"
+  dependencies:
+    "@tokenizer/token" "^0.1.0"
+    ieee754 "^1.1.13"
 
 topo@3.x.x:
   version "3.0.0"
@@ -8993,6 +9036,12 @@ type-is@~1.6.15, type-is@~1.6.16:
   dependencies:
     media-typer "0.3.0"
     mime-types "~2.1.18"
+
+typedarray-to-buffer@^3.1.5:
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/typedarray-to-buffer/-/typedarray-to-buffer-3.1.5.tgz#a97ee7a9ff42691b9f783ff1bc5112fe3fca9080"
+  dependencies:
+    is-typedarray "^1.0.0"
 
 typedarray@^0.0.6:
   version "0.0.6"
