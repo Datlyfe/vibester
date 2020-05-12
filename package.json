@@ -22,7 +22,7 @@
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
     "vue-virtual-scroll-list": "^1.2.8",
-    "vuex": "^3.0.1"
+    "vuex": "^3.4.0"
   },
   "devDependencies": {
     "@types/jest": "^23.1.4",
